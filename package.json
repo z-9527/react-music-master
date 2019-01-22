@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@babel/plugin-proposal-decorators": "^7.2.3",
+    "antd-mobile": "^2.2.8",
+    "babel-plugin-import": "^1.11.0",
     "react": "^16.7.0",
     "react-app-rewired": "2.0.2-next.0",
     "react-dom": "^16.7.0",

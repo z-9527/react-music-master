@@ -1,4 +1,5 @@
 import 'whatwg-fetch'
+import {Toast} from 'antd-mobile'
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || ''
 
@@ -11,9 +12,9 @@ const BASE_URL = process.env.REACT_APP_BASE_URL || ''
 function handleURL (url, param) {
     let completeUrl = BASE_URL + url
     if (completeUrl.indexOf('?') === -1) {
-        completeUrl = `${url}?${ObjToURLString(param)}`
+        completeUrl = `${completeUrl}?${ObjToURLString(param)}`
     } else {
-        completeUrl = `${url}&${ObjToURLString(param)}`
+        completeUrl = `${completeUrl}&${ObjToURLString(param)}`
     }
     return completeUrl
 }
@@ -36,10 +37,14 @@ export async function get (url, param) {
     const completeUrl = handleURL(url, param)
     const response = await fetch(completeUrl, {
         credentials: 'include',
+        xhrFields: {
+            withCredentials: true       //跨域
+        },
     })
     if (response.ok) {
         return response.json()
     } else {
+        Toast.offline(response.statusText)
         return response
     }
 }
@@ -49,6 +54,9 @@ export async function post (url, parma) {
     const response = await fetch(completeUrl, {
         credentials: 'include',
         method: 'POST',
+        xhrFields: {
+            withCredentials: true
+        },
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
@@ -57,6 +65,7 @@ export async function post (url, parma) {
     if (response.ok) {
         return response.json()
     } else {
+        Toast.offline(response.statusText)
         return response
     }
 }
