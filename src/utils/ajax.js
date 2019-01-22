@@ -44,7 +44,7 @@ export async function get (url, param) {
     if (response.ok) {
         return response.json()
     } else {
-        Toast.offline(response.statusText)
+        Toast.offline(response.statusText || '网络错误')
         return response
     }
 }
@@ -65,7 +65,7 @@ export async function post (url, parma) {
     if (response.ok) {
         return response.json()
     } else {
-        Toast.offline(response.statusText)
+        Toast.offline(response.statusText || '网络错误')
         return response
     }
 }
