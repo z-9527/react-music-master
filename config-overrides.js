@@ -1,4 +1,5 @@
 const { injectBabelPlugin } = require('react-app-rewired');
+const rewireLess = require('react-app-rewire-less-modules')
 const path = require('path')
 
 function resolve (dir) {
@@ -19,6 +20,8 @@ module.exports = function override(config, env) {
     config.resolve.alias = {
         '@': resolve('src')
     }
+    //less模块化
+    config = rewireLess(config, env);
 
 
     return config;
