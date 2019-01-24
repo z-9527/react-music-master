@@ -1,7 +1,10 @@
 import React from 'react'
 import style from './style/index.module.less'
 import { inject, observer } from 'mobx-react'
-import { NavLink, withRouter } from 'react-router-dom'
+import { NavLink, withRouter,Route,Switch } from 'react-router-dom'
+import asyncComponent from '@/utils/AsyncComponent'
+
+const SingerList = asyncComponent(()=>import('../../pages/SingerList/Index/index'))
 
 @inject('appStore') @withRouter @observer
 class Main extends React.Component {
@@ -22,6 +25,11 @@ class Main extends React.Component {
                     <li><NavLink to={'/find'} activeClassName={style.active}>发现</NavLink></li>
                     <li><NavLink to={'/rank'} activeClassName={style.active}>排行榜</NavLink></li>
                 </ul>
+                <div>
+                    <Switch>
+                        <Route path={'/singer'} component={SingerList}/>
+                    </Switch>
+                </div>
 
 
                 {isExpandSider && <div className={style.mask} onClick={this.toggleExpand}/>}
