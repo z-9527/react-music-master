@@ -1,22 +1,51 @@
 @import "../../../assets/style/default";
 
-.container{
+.container {
   position: relative;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
   background: #fff;
   transition: all 0.25s;
+  font-size: @font-size-base;
 
-  .header{
+  .header {
     width: 100%;
     height: @header-height;
     background: @base-color;
     color: @color-text-base-inverse;
+    line-height: @header-height;
+    padding: 0 @base-padding;
   }
 
+  .navigation-menu {
+    display: flex;
+    background: @base-color;
+    color: @color-text-base-inverse;
+    height: @header-height;
+    line-height: @header-height;
+    margin-top: -1px; //消除和上面div的间隙
+    li {
+      flex-grow: 1;
+      text-align: center;
 
-  .mask{
+      a{
+        display: block;
+        height: 100%;
+        color: @color-text-base-inverse;
+        opacity: .8;
+        font-size: @font-size-h3;
+        box-sizing: border-box;
+        &.active{
+          opacity: 1;
+          border-bottom: 3px solid @auxiliary-color;
+        }
+      }
+
+    }
+  }
+
+  .mask {
     position: absolute;
     top: 0;
     left: 0;
