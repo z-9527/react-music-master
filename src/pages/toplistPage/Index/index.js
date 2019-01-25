@@ -35,7 +35,7 @@ class Index extends React.Component {
     }
     goDetail = async (index) => {
         const {match, history} = this.props
-        history.push(`${match.url}/${index}`)
+        history.push(`${match.url}/top/${index}`)
     }
 
     render () {
@@ -59,7 +59,7 @@ class Index extends React.Component {
                     })}
                 </ul>
                 <Loading loading={loading}/>
-                <Route path={`${match.url}/:idx`} component={Detail}/>
+                <Route path={`${match.url}/top/:idx`} component={Detail}/>
             </div>
         )
     }
