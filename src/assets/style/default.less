@@ -1,34 +1,33 @@
 @hd: 1px; // 基本单位
 
-
 // 色彩
-@base-color:#3e82f8;        //基本色彩
-@auxiliary-color:#ffb800;          //辅助色彩
-
+@base-color: #3e82f8; //基本色彩
+@auxiliary-color: #ffb800; //辅助色彩
 
 // 文字色
-@color-text-base: #000;                  // 基本
-@color-text-base-inverse: #fff;          // 基本 - 反色
-@color-text-caption: #888;               // 辅助描述
-@color-text-paragraph: #333;             // 段落
-@color-link: @base-color;             // 链接
+@color-text-base: #000; // 基本
+@color-text-base-inverse: #fff; // 基本 - 反色
+@color-text-caption: #888; // 辅助描述
+@color-text-paragraph: #333; // 段落
 
 // 背景色
-@fill-base: #fff;                           // 组件默认背景
-@fill-body: #f5f5f9;                        // 页面背景
-@fill-mask: rgba(0, 0, 0, 0.4);              // 遮罩背景
-
-
-
+@fill-base: #fff; // 组件默认背景
+@fill-body: #f5f5f9; // 页面背景
+@fill-mask: rgba(0, 0, 0, 0.4); // 遮罩背景
 
 //尺寸
 
-@header-height: 44*@hd;  //页面头部高度
+@header-height: 44*@hd; //页面头部高度
+@footer-height: 100*@hd; //页面底部高度
 
-@base-padding:20*@hd; //基本的pading
+@content-height: calc(100vh - 2*@header-height); //页面中心内容高度
 
-@font-size-base: 14*@hd;  //基本的文字大小
-@font-size-h3:15*@hd;  //三级标题大小
+
+@font-size-base: 14*@hd; //基本的文字大小
+@font-size-h3: 15*@hd; //三级标题大小
+
+@radius-base: 5 * @hd; //基本圆角
+@radius-circle: 50%; //圆形
 
 
 
