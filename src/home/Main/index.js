@@ -5,6 +5,7 @@ import { NavLink, withRouter,Route,Switch,Redirect } from 'react-router-dom'
 import asyncComponent from '@/utils/AsyncComponent'
 
 const SingerList = asyncComponent(()=>import('../../pages/SingerList/Index/index'))
+const FindPageIndex = asyncComponent(()=>import('../../pages/findPage/Index/index'))
 const TopListPageIndex = asyncComponent(()=>import('../../pages/toplistPage/Index/index'))
 
 @inject('appStore') @withRouter @observer
@@ -28,8 +29,10 @@ class Main extends React.Component {
                 </ul>
                 <div className={style.content}>
                     <Switch>
-                        <Route path={'/singer'} component={SingerList}/>
+                        <Route path={'/find'} component={FindPageIndex}/>
                         <Route path={'/toplist'} component={TopListPageIndex}/>
+                        <Route path={'/singer'} component={SingerList}/>
+
                         <Redirect exact from={'/'} to={'/my'}/>
                     </Switch>
                 </div>

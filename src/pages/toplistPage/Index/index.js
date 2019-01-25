@@ -33,7 +33,7 @@ class Index extends React.Component {
         })
         console.log(res)
     }
-    goDetail = async (index) => {
+    goDetail = (index) => {
         const {match, history} = this.props
         history.push(`${match.url}/top/${index}`)
     }
