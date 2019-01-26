@@ -23,24 +23,34 @@ class SearchPage extends React.Component {
     }
     getSuggestList = async (keywords)=>{
         if(!keywords){
+            this.setState({
+                suggestList:[]
+            })
             return
         }
-        const res = await get(`/search/suggest?keywords=${keywords}`)
-        this.setState({
-            suggestList: res.result || []
+        const res = await get(`/search/suggest`,{
+            keywords,
+            type:'mobile'
         })
-        console.log(res)
+        this.setState({
+            suggestList: res.result ? res.result.allMatch : []
+        })
     }
     handleChange = async (keywords)=>{
         this.getSuggestList(keywords)
-
         this.setState({
             keywords
         })
     }
+    search = async (keywords)=>{
+        const res = await get(`/search/suggest?keywords=${keywords}`)
+        console.log(444,res)
+    }
 
     render () {
         const {hotlist, isFocus,keywords,suggestList} = this.state
+
+        console.log(33,suggestList)
 
         const FocusBox = () => <div>
             聚焦
@@ -60,6 +70,7 @@ class SearchPage extends React.Component {
                 <div>
                     <SearchBar
                         value={keywords}
+                        onSubmit={this.search}
                         onChange={this.handleChange}
                         placeholder={'搜索歌手、歌曲、专辑'}
                         onBlur={() => this.setState({isFocus: false})}
