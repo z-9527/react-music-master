@@ -1,11 +1,9 @@
 import React from 'react'
 import { get } from '@/utils/ajax'
-import Loading from '@/components/Loading'
+import Loading from '@/components/Loading/index'
 import style from './style/index.module.less'
-import { withRouter, Route } from 'react-router-dom'
-import asyncComponent from '@/utils/AsyncComponent'
+import { withRouter } from 'react-router-dom'
 
-const Detail = asyncComponent(() => import('../Detail/index'))
 
 @withRouter
 class Index extends React.Component {
@@ -34,12 +32,11 @@ class Index extends React.Component {
         console.log(res)
     }
     goDetail = (index) => {
-        const {match, history} = this.props
-        history.push(`${match.url}/top/${index}`)
+        const {history} = this.props
+        history.push(`/top/${index}`)
     }
 
     render () {
-        const {match} = this.props
         const {loading, topList} = this.state
         return (
             <div className={style.container}>
@@ -59,7 +56,6 @@ class Index extends React.Component {
                     })}
                 </ul>
                 <Loading loading={loading}/>
-                <Route path={`${match.url}/top/:idx`} component={Detail}/>
             </div>
         )
     }

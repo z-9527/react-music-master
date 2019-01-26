@@ -4,9 +4,9 @@ import { inject, observer } from 'mobx-react'
 import { NavLink, withRouter,Route,Switch,Redirect } from 'react-router-dom'
 import asyncComponent from '@/utils/AsyncComponent'
 
-const SingerList = asyncComponent(()=>import('../../pages/SingerList/Index/index'))
-const FindPageIndex = asyncComponent(()=>import('../../pages/findPage/Index/index'))
-const TopListPageIndex = asyncComponent(()=>import('../../pages/toplistPage/Index/index'))
+const FindPage = asyncComponent(()=>import('../../pages/FindPage/index'))          //发现页面
+const TopListPage = asyncComponent(()=>import('../../pages/ToplistPage/index'))     //排行榜列表页面
+const TopPage = asyncComponent(()=>import('../../pages/TopPage/index'))             //排行榜页面
 
 @inject('appStore') @withRouter @observer
 class Main extends React.Component {
@@ -29,9 +29,10 @@ class Main extends React.Component {
                 </ul>
                 <div className={style.content}>
                     <Switch>
-                        <Route path={'/find'} component={FindPageIndex}/>
-                        <Route path={'/toplist'} component={TopListPageIndex}/>
-                        <Route path={'/singer'} component={SingerList}/>
+                        <Route path={'/find'} component={FindPage}/>
+                        <Route path={'/toplist'} component={TopListPage}/>
+
+                        <Route path={`/top/:idx`} component={TopPage}/>
 
                         <Redirect exact from={'/'} to={'/my'}/>
                     </Switch>
