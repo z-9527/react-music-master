@@ -1,17 +1,118 @@
 @import '../../../assets/style/default';
+@import "../../../assets/style/common";
 
-.container{
+.container {
 
-  .banners-box{
-    height: 155px;
+  .section {
+    background: @fill-base;
+    margin-bottom: 10px;
     padding: 10px 8px;
-    background:@fill-base;
+  }
+
+  .banners-box {
+    height: 155px;
     touch-action: none;
     box-sizing: border-box;
+    .section();
 
-    img{
+    img {
       width: 100%;
       height: 36vw;
     }
   }
+
+  .menu {
+    display: flex;
+    background: @fill-base;
+    padding: 20px 0;
+    margin-bottom: 10px;
+
+    & > div {
+      flex-grow: 1;
+      text-align: center;
+      color: #828282;
+
+      .icon {
+        font-size: 20px;
+        margin-bottom: 5px;
+      }
+    }
+  }
+
+  .hot-singer-box {
+    .section();
+
+    .title-box {
+      display: flex;
+      justify-content: space-between;
+
+      a {
+        color: @color-link;
+      }
+    }
+
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-top: 15px;
+
+      li {
+        width: 21%;
+        margin-bottom: 10px;
+
+        .singer-box {
+          display: block;
+          color: @color-text-base;
+          text-align: center;
+          font-size: 12px;
+
+          img {
+            width: 100%;
+            border-radius: @radius-circle;
+          }
+          div {
+            margin-top: 5px;
+            .ellipsis();
+          }
+
+        }
+      }
+    }
+
+  }
+
+  .recommend-box {
+    .section();
+
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-top: 10px;
+
+      li {
+        width: 32%;
+        margin-bottom: 10px;
+
+        .sheet-box {
+          display: block;
+          color: @color-text-base;
+          font-size: 12px;
+
+          img {
+            width: 100%;
+            border-radius: @radius-base;
+          }
+          div {
+            height: 28px;
+            margin-top: 5px;
+            line-height: 1.2;
+            overflow: hidden;
+          }
+        }
+      }
+    }
+  }
+
 }
