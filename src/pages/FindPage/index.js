@@ -5,12 +5,15 @@ import {Carousel} from 'antd-mobile'
 import image from './img/1.png'
 import {Link} from 'react-router-dom'
 
+// https://www.cnblogs.com/zyl-Tara/p/7998590.html
+// 关于react中切换路由时报以上错误，实际的原因是因为在组件挂载（mounted）之后进行了异步操作，比如ajax请求或者设置了定时器等，而你在callback中进行了setState操作。当你切换路由时，组件已经被卸载（unmounted）了，此时异步操作中callback还在执行，因此setState没有得到值。
+
 class Index extends React.Component{
     state = {
         banners:[{imageUrl:image}], //给一个初始值，避免在数据返回之前为空数组
-        hotSingers:[],  //热门歌手列表
-        recommends:[],  //推荐歌单
-        highqualitys:[], //精品歌单
+        hotSingerList:[],  //热门歌手列表
+        recommendList:[],  //推荐歌单
+        highqualityList:[], //精品歌单
     }
 
     componentDidMount(){
@@ -35,26 +38,26 @@ class Index extends React.Component{
     getHotSingers = async ()=>{
         const res = await get('/top/artists?offset=0&limit=8')
         this.setState({
-            hotSingers:res.artists || []
+            hotSingerList:res.artists || []
         })
     }
     getRecommends = async ()=>{
         const res = await get('/personalized')
         const list = res.result || []
         this.setState({
-            recommends:list.slice(0,6)
+            recommendList:list.slice(0,6)
         })
     }
     getHighqualitys = async ()=>{
         const res = await get('/top/playlist/highquality?limit=6')
         this.setState({
-            highqualitys:res.playlists || []
+            highqualityList:res.playlists || []
         })
     }
 
 
     render(){
-        const {banners,hotSingers,recommends,highqualitys} = this.state
+        const {banners,hotSingerList,recommendList,highqualityList} = this.state
 
         const menu = [
             {
@@ -96,7 +99,7 @@ class Index extends React.Component{
                         <Link to={'/hotSingers'}>查看全部</Link>
                     </div>
                     <ul>
-                        {hotSingers && hotSingers.map(singer=><li key={singer.id}>
+                        {hotSingerList && hotSingerList.map(singer=><li key={singer.id}>
                             <Link to={`/singer/${singer.id}`} className={style['singer-box']}>
                                 <img src={singer.img1v1Url} alt=""/>
                                 <div>{singer.name}</div>
@@ -107,7 +110,7 @@ class Index extends React.Component{
                 <div className={style['recommend-box']}>
                     <div>每日推荐 &gt;</div>
                     <ul>
-                        {recommends && recommends.map(sheet=><li key={sheet.id}>
+                        {recommendList && recommendList.map(sheet=><li key={sheet.id}>
                             <Link to={`/sheet/${sheet.id}`} className={style['sheet-box']}>
                                 <img src={sheet.picUrl} alt=""/>
                                 <div>{sheet.name}</div>
@@ -118,7 +121,7 @@ class Index extends React.Component{
                 <div className={style['recommend-box']}>
                     <div>精品歌单 &gt;</div>
                     <ul>
-                        {highqualitys && highqualitys.map(sheet=><li key={sheet.id}>
+                        {highqualityList && highqualityList.map(sheet=><li key={sheet.id}>
                             <Link to={`/sheet/${sheet.id}`} className={style['sheet-box']}>
                                 <img src={sheet.coverImgUrl} alt=""/>
                                 <div>{sheet.name}</div>

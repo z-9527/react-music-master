@@ -7,6 +7,7 @@ import asyncComponent from '@/utils/AsyncComponent'
 const FindPage = asyncComponent(()=>import('../../pages/FindPage/index'))          //发现页面
 const TopListPage = asyncComponent(()=>import('../../pages/ToplistPage/index'))     //排行榜列表页面
 const TopPage = asyncComponent(()=>import('../../pages/TopPage/index'))             //排行榜页面
+const SearchPage = asyncComponent(()=>import('../../pages/SearchPage/index'))             //搜索页面
 
 @inject('appStore') @withRouter @observer
 class Main extends React.Component {
@@ -25,14 +26,14 @@ class Main extends React.Component {
                     <li><NavLink to={'/my'} activeClassName={style.active}>我的</NavLink></li>
                     <li><NavLink to={'/find'} activeClassName={style.active}>发现</NavLink></li>
                     <li><NavLink to={'/toplist'} activeClassName={style.active}>排行榜</NavLink></li>
-                    <li><NavLink to={'/singer'} activeClassName={style.active}>歌手</NavLink></li>
+                    <li><NavLink to={'/search'} activeClassName={style.active}>搜索</NavLink></li>
                 </ul>
                 <div className={style.content}>
                     <Switch>
                         <Route path={'/find'} component={FindPage}/>
                         <Route path={'/toplist'} component={TopListPage}/>
-
                         <Route path={`/top/:idx`} component={TopPage}/>
+                        <Route path={`/search`} component={SearchPage}/>
 
                         <Redirect exact from={'/'} to={'/my'}/>
                     </Switch>

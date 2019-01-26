@@ -1,5 +1,5 @@
 import 'whatwg-fetch'
-import {Toast} from 'antd-mobile'
+import { Toast } from 'antd-mobile'
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || ''
 
@@ -11,10 +11,12 @@ const BASE_URL = process.env.REACT_APP_BASE_URL || ''
  */
 function handleURL (url, param) {
     let completeUrl = BASE_URL + url
-    if (completeUrl.indexOf('?') === -1) {
-        completeUrl = `${completeUrl}?${ObjToURLString(param)}`
-    } else {
-        completeUrl = `${completeUrl}&${ObjToURLString(param)}`
+    if (param) {
+        if (completeUrl.indexOf('?') === -1) {
+            completeUrl = `${completeUrl}?${ObjToURLString(param)}`
+        } else {
+            completeUrl = `${completeUrl}&${ObjToURLString(param)}`
+        }
     }
     return completeUrl
 }
@@ -25,12 +27,15 @@ function handleURL (url, param) {
  * @returns {string}
  * @constructor
  */
-function ObjToURLString (param = {}) {
-    const list = Object.entries(param).map(item => {
-        return `${item[0]}=${item[1]}`
-    })
-
-    return list.join('&')
+function ObjToURLString (param) {
+    let str = ''
+    if (Object.prototype.toString.call(param) === '[object Object]') {
+        const list = Object.entries(param).map(item => {
+            return `${item[0]}=${item[1]}`
+        })
+        str = list.join('&')
+    }
+    return str
 }
 
 export async function get (url, param) {
