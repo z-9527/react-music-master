@@ -2,13 +2,18 @@ import React from 'react'
 import { get } from '@/utils/ajax'
 import { SearchBar } from 'antd-mobile'
 import style from './style/index.module.less'
+import Loading from '@/components/Loading'
 
 class SearchPage extends React.Component {
     state = {
         hotlist: [],   //热门搜索列表
         isFocus: false, //输入框是否聚焦
-        keywords:'', //搜索关键词
-        suggestList:[]  //搜索建议列表
+        keywords: '', //搜索关键词
+        suggestList: [],  //搜索建议列表
+        searchHistory: JSON.parse(localStorage.getItem('searchHistory')) || [],  //搜索历史
+        isSearch:false, //是否搜索
+        searchLoading:false,  //搜索loading
+        resultList:[]  //搜索结果
     }
 
     componentDidMount () {
@@ -21,52 +26,99 @@ class SearchPage extends React.Component {
             hotlist: res.result ? res.result.hots : []
         })
     }
-    getSuggestList = async (keywords)=>{
-        if(!keywords){
+    getSuggestList = async (keywords) => {
+        if (!keywords) {
             this.setState({
-                suggestList:[]
+                suggestList: []
             })
             return
         }
-        const res = await get(`/search/suggest`,{
+        const res = await get(`/search/suggest`, {
             keywords,
-            type:'mobile'
+            type: 'mobile'
         })
         this.setState({
             suggestList: res.result ? res.result.allMatch : []
         })
     }
-    handleChange = async (keywords)=>{
+    handleChange = async (keywords) => {
         this.getSuggestList(keywords)
         this.setState({
             keywords
         })
     }
-    search = async (keywords)=>{
-        const res = await get(`/search/suggest?keywords=${keywords}`)
-        console.log(444,res)
+    search = async (keywords) => {
+        this.setState({
+            keywords,
+            isSearch:true,
+            searchLoading:true
+        })
+        this.addHistory(keywords)
+        const res = await get(`/search?keywords=${keywords}`)
+        console.log(res)
+        this.setState({
+            searchLoading:false
+        })
+    }
+    addHistory = (keywords) => {
+        let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || []
+        const index = searchHistory.findIndex(item => item === keywords)
+        if (index !== -1) {
+            searchHistory.splice(index, 1)
+        }
+        searchHistory.unshift(keywords)
+
+        localStorage.setItem('searchHistory', JSON.stringify(searchHistory))
+        this.setState({
+            searchHistory
+        })
+    }
+    removeHistory = (index) => {
+        let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || []
+        searchHistory.splice(index, 1)
+        localStorage.setItem('searchHistory', JSON.stringify(searchHistory))
+        this.setState({
+            searchHistory
+        })
     }
 
     render () {
-        const {hotlist, isFocus,keywords,suggestList} = this.state
+        const {hotlist, isFocus, keywords, suggestList, searchHistory,isSearch,searchLoading} = this.state
 
-        console.log(33,suggestList)
 
         const FocusBox = () => <div>
-            聚焦
+            {
+                isSearch ? <div>
+                    <Loading loading={searchLoading}/>
+                </div> : <div>
+                    <ul className={style['suggest-box']}>
+                        {suggestList && suggestList.map(item => <li key={item.keyword} onClick={()=>this.search(item.keyword)}>
+                            <div className={'iconfont icon-sousuo1'}/>
+                            <div>{item.keyword}</div>
+                        </li>)}
+                    </ul>
+                </div>
+            }
         </div>
 
         const BlurBox = () => <div>
             <div className={style['hot-list-box']}>
                 <div>热门搜索</div>
                 <ul>
-                    {hotlist.map(hot=><li key={hot.first}>{hot.first}</li>)}
+                    {hotlist && hotlist.map(hot => <li key={hot.first} onClick={()=>this.search(hot.first)}>{hot.first}</li>)}
                 </ul>
+                <ol style={{display:hotlist.length?'':'none'}}>
+                    {searchHistory && searchHistory.map(item => <li key={item}>
+                        <div className={'iconfont icon-lishibisai'}/>
+                        <div onClick={()=>this.search(item)}>{item}</div>
+                        <div className={'iconfont icon-lvzhou_shanchu_lajitong'} onClick={()=>this.removeHistory(item)}/>
+                    </li>)}
+                </ol>
             </div>
         </div>
 
         return (
-            <div>
+            <div className={style.container}>
                 <div>
                     <SearchBar
                         value={keywords}
