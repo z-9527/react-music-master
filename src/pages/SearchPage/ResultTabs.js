@@ -92,6 +92,11 @@ class ResultTabs extends React.Component{
             {title:'歌单',type:1000},
         ]
 
+        const NoResult = ()=>(<div className={style['no-result']}>
+            <div className={'iconfont icon-wukong'} style={{fontSize:28,marginBottom:10}}/>
+            <p>暂无搜索结果...</p>
+        </div>)
+
         return (
             <div>
                 <Tabs tabs={tabs} onTabClick={this.handleTabClick} page={page} swipeable={false} animated={false}>
@@ -117,6 +122,7 @@ class ResultTabs extends React.Component{
                             </li>)}
                         </ul>
                         <Loading loading={searchLoading} style={{position:'absolute',top:'40%'}}/>
+                        {!searchLoading && !songs.length && <NoResult/>}
                     </div>
                     {/*专辑*/}
                     <div className={`${style['tab-item']} ${style.albums}`}>
@@ -141,6 +147,7 @@ class ResultTabs extends React.Component{
                             </li>)}
                         </ul>
                         <Loading loading={searchLoading} style={{position:'absolute',top:'40%'}}/>
+                        {!searchLoading && !albums.length && <NoResult/>}
                     </div>
                     {/*歌手*/}
                     <div className={`${style['tab-item']} ${style.artists}`}>
@@ -157,6 +164,7 @@ class ResultTabs extends React.Component{
                             </li>)}
                         </ul>
                         <Loading loading={searchLoading} style={{position:'absolute',top:'40%'}}/>
+                        {!searchLoading && !artists.length && <NoResult/>}
                     </div>
                     {/*歌单*/}
                     <div className={`${style['tab-item']} ${style.playlists}`}>
@@ -172,6 +180,7 @@ class ResultTabs extends React.Component{
                             </li>)}
                         </ul>
                         <Loading loading={searchLoading} style={{position:'absolute',top:'40%'}}/>
+                        {!searchLoading && !playlists.length && <NoResult/>}
                     </div>
                 </Tabs>
             </div>
