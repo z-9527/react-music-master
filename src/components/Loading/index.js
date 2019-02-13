@@ -6,10 +6,14 @@ class Loading extends React.Component {
     static propTypes = {
         type: PropTypes.string,
         loading: PropTypes.bool,
+        style: PropTypes.object
     }
-    matchingType = (type)=>{
-        switch (type){
-            case 'line-scale':{
+    static defaultProps = {
+        style: {}
+    }
+    matchingType = (type) => {
+        switch (type) {
+            case 'line-scale': {
                 return (
                     <div className={style['line-scale']}>
                         <div/>
@@ -20,7 +24,7 @@ class Loading extends React.Component {
                     </div>
                 )
             }
-            case 'ball-clip-rotate-multiple':{
+            case 'ball-clip-rotate-multiple': {
                 return (
                     <div className={style['ball-clip-rotate-multiple']}>
                         <div/>
@@ -28,7 +32,7 @@ class Loading extends React.Component {
                     </div>
                 )
             }
-            case 'ball-clip-rotate-pulse':{
+            case 'ball-clip-rotate-pulse': {
                 return (
                     <div className={style['ball-clip-rotate-pulse']}>
                         <div/>
@@ -36,21 +40,21 @@ class Loading extends React.Component {
                     </div>
                 )
             }
-            case 'square-spin':{
+            case 'square-spin': {
                 return (
                     <div className={style['square-spin']}>
                         <div/>
                     </div>
                 )
             }
-            case 'ball-scale':{
+            case 'ball-scale': {
                 return (
                     <div className={style['ball-scale']}>
                         <div/>
                     </div>
                 )
             }
-            case 'ball-scale-multiple':{
+            case 'ball-scale-multiple': {
                 return (
                     <div className={style['ball-scale-multiple']}>
                         <div/>
@@ -73,9 +77,9 @@ class Loading extends React.Component {
     }
 
     render () {
-        const {type,loading} = this.props
+        const {type, loading} = this.props
         return loading ? (
-            <div className={style['loading-box']}>
+            <div className={style['loading-box']} style={this.props.style}>
                 {this.matchingType(type)}
             </div>
         ) : null

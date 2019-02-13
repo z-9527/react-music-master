@@ -2,18 +2,17 @@ import React from 'react'
 import { get } from '@/utils/ajax'
 import { SearchBar } from 'antd-mobile'
 import style from './style/index.module.less'
-import Loading from '@/components/Loading'
+import ResultTabs from './ResultTabs'
 
 class SearchPage extends React.Component {
     state = {
         hotlist: [],   //热门搜索列表
         isFocus: false, //输入框是否聚焦
-        keywords: '', //搜索关键词
+        keywords: 'A妹新专辑', //搜索关键词
         suggestList: [],  //搜索建议列表
         searchHistory: JSON.parse(localStorage.getItem('searchHistory')) || [],  //搜索历史
         isSearch:false, //是否搜索
-        searchLoading:false,  //搜索loading
-        resultList:[]  //搜索结果
+
     }
 
     componentDidMount () {
@@ -51,14 +50,9 @@ class SearchPage extends React.Component {
         this.setState({
             keywords,
             isSearch:true,
-            searchLoading:true
         })
         this.addHistory(keywords)
-        const res = await get(`/search?keywords=${keywords}`)
-        console.log(res)
-        this.setState({
-            searchLoading:false
-        })
+
     }
     addHistory = (keywords) => {
         let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || []
@@ -83,13 +77,12 @@ class SearchPage extends React.Component {
     }
 
     render () {
-        const {hotlist, isFocus, keywords, suggestList, searchHistory,isSearch,searchLoading} = this.state
-
+        const {hotlist, isFocus, keywords, suggestList, searchHistory,isSearch} = this.state
 
         const FocusBox = () => <div>
             {
                 isSearch ? <div>
-                    <Loading loading={searchLoading}/>
+                    <ResultTabs keywords={keywords}/>
                 </div> : <div>
                     <ul className={style['suggest-box']}>
                         {suggestList && suggestList.map(item => <li key={item.keyword} onClick={()=>this.search(item.keyword)}>

@@ -28,7 +28,7 @@ class Index extends React.Component{
             this.getHighqualitys()
         ]).then(()=>{
             setTimeout(()=>{
-                this.wrapper.refresh()   //为什么有时候还是不能滚动
+                this.wrapper && this.wrapper.refresh()   //为什么有时候还是不能滚动
             },17)
         })
     }
