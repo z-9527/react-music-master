@@ -20,6 +20,11 @@ class Index extends React.Component{
     componentDidMount(){
         this.initPage()
     }
+    componentWillUnmount(){
+        this.setState = ()=>{
+            return;
+        };
+    }
     initPage = ()=>{
         Promise.all([
             this.getBanners(),

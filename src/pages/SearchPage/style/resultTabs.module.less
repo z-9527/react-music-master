@@ -1,7 +1,65 @@
-.tab-item{
-  position: relative;
-  height: calc(100vh - 200px);
-}
-.songs{
+@import "../../../assets/style/default";
+@import "../../../assets/style/common";
 
+.tab-item {
+  position: relative;
+  height: calc(100vh - 230px);
+  color: @color-text-paragraph;
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 55px;
+  padding: 0 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.songs {
+  li {
+    .list-item();
+
+    .left {
+      width: 80%;
+
+      .title {
+        font-size: 16px;
+        .ellipsis();
+        line-height: 1.5;
+      }
+      .info {
+        font-size: 12px;
+        color: #666;
+        .ellipsis();
+      }
+    }
+  }
+}
+
+.albums,.artists,.playlists {
+  li {
+    .list-item();
+
+    img {
+      width: 45px;
+      height: 45px;
+      margin-right: 10px;
+    }
+
+    .info {
+      flex-grow: 1;
+
+      &>div{
+        width: 85%;
+        .ellipsis();
+      }
+
+      .sub-info {
+        font-size: 12px;
+        margin-top: 5px;
+        color: #666;
+      }
+    }
+  }
 }

@@ -3,12 +3,13 @@ import { get } from '@/utils/ajax'
 import { SearchBar } from 'antd-mobile'
 import style from './style/index.module.less'
 import ResultTabs from './ResultTabs'
+import Loading from '../../components/Loading/index'
 
 class SearchPage extends React.Component {
     state = {
         hotlist: [],   //热门搜索列表
         isFocus: false, //输入框是否聚焦
-        keywords: 'A妹新专辑', //搜索关键词
+        keywords: '', //搜索关键词
         suggestList: [],  //搜索建议列表
         searchHistory: JSON.parse(localStorage.getItem('searchHistory')) || [],  //搜索历史
         isSearch:false, //是否搜索
@@ -17,6 +18,11 @@ class SearchPage extends React.Component {
 
     componentDidMount () {
         this.getHotlist()
+    }
+    componentWillUnmount(){
+        this.setState = ()=>{
+            return;
+        };
     }
 
     getHotlist = async () => {
@@ -43,7 +49,8 @@ class SearchPage extends React.Component {
     handleChange = async (keywords) => {
         this.getSuggestList(keywords)
         this.setState({
-            keywords
+            keywords,
+            isSearch:false
         })
     }
     search = async (keywords) => {
@@ -96,17 +103,18 @@ class SearchPage extends React.Component {
 
         const BlurBox = () => <div>
             <div className={style['hot-list-box']}>
-                <div>热门搜索</div>
+                <div style={{display:hotlist.length?'':'none'}}>热门搜索</div>
                 <ul>
                     {hotlist && hotlist.map(hot => <li key={hot.first} onClick={()=>this.search(hot.first)}>{hot.first}</li>)}
                 </ul>
                 <ol style={{display:hotlist.length?'':'none'}}>
-                    {searchHistory && searchHistory.map(item => <li key={item}>
+                    {searchHistory && searchHistory.map((item,index) => <li key={item}>
                         <div className={'iconfont icon-lishibisai'}/>
                         <div onClick={()=>this.search(item)}>{item}</div>
-                        <div className={'iconfont icon-lvzhou_shanchu_lajitong'} onClick={()=>this.removeHistory(item)}/>
+                        <div className={'iconfont icon-lvzhou_shanchu_lajitong'} onClick={()=>this.removeHistory(index)}/>
                     </li>)}
                 </ol>
+                <Loading loading={!hotlist.length}/>
             </div>
         </div>
 
@@ -122,7 +130,7 @@ class SearchPage extends React.Component {
                         onFocus={() => this.setState({isFocus: true})}/>
                 </div>
                 <div>
-                    {isFocus || keywords ? <FocusBox/> : <BlurBox/>}
+                    {(keywords || isFocus) ? <FocusBox/> : <BlurBox/>}
                 </div>
             </div>
         )
