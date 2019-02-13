@@ -174,7 +174,7 @@ class ResultTabs extends React.Component{
                                 <div className={style.info}>
                                     <div>{item.name}</div>
                                     <div className={style['sub-info']}>
-                                        {item.trackCount}首 - {item.creator.nickname}  播放{formatNumber(item.playCount)}
+                                        {item.trackCount}首 - {item.creator.nickname}  播放{formatNumber(item.playCount)}次
                                     </div>
                                 </div>
                             </li>)}

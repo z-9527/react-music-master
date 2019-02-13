@@ -5,6 +5,7 @@ import {Carousel} from 'antd-mobile'
 import image from './img/1.png'
 import {Link} from 'react-router-dom'
 import Scroll from '@/components/Scroll'
+import {formatNumber} from '@/utils/util'
 
 // https://www.cnblogs.com/zyl-Tara/p/7998590.html
 // 关于react中切换路由时报以上错误，实际的原因是因为在组件挂载（mounted）之后进行了异步操作，比如ajax请求或者设置了定时器等，而你在callback中进行了setState操作。当你切换路由时，组件已经被卸载（unmounted）了，此时异步操作中callback还在执行，因此setState没有得到值。
@@ -124,6 +125,7 @@ class Index extends React.Component{
                                     <Link to={`/sheet/${sheet.id}`} className={style['sheet-box']}>
                                         <img src={sheet.picUrl} alt=""/>
                                         <div>{sheet.name}</div>
+                                        <p className={style.playCount}><span className={'iconfont icon-erji1'} style={{fontSize:12}}/> {formatNumber(sheet.playCount)}</p>
                                     </Link>
                                 </li>)}
                             </ul>
@@ -135,6 +137,7 @@ class Index extends React.Component{
                                     <Link to={`/sheet/${sheet.id}`} className={style['sheet-box']}>
                                         <img src={sheet.coverImgUrl} alt=""/>
                                         <div>{sheet.name}</div>
+                                        <p className={style.playCount}><span className={'iconfont icon-erji1'} style={{fontSize:12}}/> {formatNumber(sheet.playCount)}</p>
                                     </Link>
                                 </li>)}
                             </ul>

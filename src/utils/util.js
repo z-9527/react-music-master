@@ -2,10 +2,10 @@
 
 export function formatNumber(num){
     if(num<10000){
-        return num + '次'
+        return num
     }
     if(num>=10000){
         num = num/10000
-        return num.toFixed(1) + '万次'
+        return num.toFixed(1) + '万'
     }
 }
