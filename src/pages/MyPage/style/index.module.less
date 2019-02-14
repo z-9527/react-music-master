@@ -1,0 +1,59 @@
+@import "../../../assets/style/default";
+
+.section{
+  margin: 10px;
+  margin-bottom: 20px;
+  background: @fill-base;
+  color: @color-text-paragraph;
+  box-shadow: 0 2px 2px #c8c8c8;
+  border-radius: @radius-base;
+
+  li{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 55px;
+
+    .prefix{
+      width: 30px;
+      margin: 0 15px 0 10px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: 600;
+    }
+    .suffix{
+      color: @base-color;
+      font-size: 24px;
+      margin: 0 20px;
+    }
+    .title{
+      flex-grow: 1;
+      font-size: 16px;
+    }
+    .number{
+      font-size: @font-size-base;
+      color: #666;
+    }
+  }
+}
+.section-title{
+  display: flex;
+  align-items: center;
+  height: 55px;
+  border-bottom: 1px solid #eee;
+  padding-left: 15px;
+  font-size: 16px;
+  color: #000;
+
+  div:first-child{
+    flex-grow: 1;
+  }
+  div:nth-child(2){
+    font-weight: 600;
+    font-size: 14px;
+  }
+  div:last-child{
+    margin: 0 20px;
+    font-weight: 600;
+  }
+}

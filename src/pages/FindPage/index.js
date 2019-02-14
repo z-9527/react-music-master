@@ -119,7 +119,7 @@ class Index extends React.Component{
                             </ul>
                         </div>
                         <div className={style['recommend-box']}>
-                            <div>每日推荐 &gt;</div>
+                            <div>每日推荐 <span className={'iconfont icon-iconfontjiantou5'} style={{fontSize:12}}/></div>
                             <ul>
                                 {recommendList && recommendList.map(sheet=><li key={sheet.id}>
                                     <Link to={`/sheet/${sheet.id}`} className={style['sheet-box']}>
@@ -131,7 +131,7 @@ class Index extends React.Component{
                             </ul>
                         </div>
                         <div className={style['recommend-box']}>
-                            <div>精品歌单 &gt;</div>
+                            <div>精品歌单 <span className={'iconfont icon-iconfontjiantou5'} style={{fontSize:12}}/></div>
                             <ul>
                                 {highqualityList && highqualityList.map(sheet=><li key={sheet.id}>
                                     <Link to={`/sheet/${sheet.id}`} className={style['sheet-box']}>
