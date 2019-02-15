@@ -1,9 +1,74 @@
+@import "../../../assets/style/default";
+
 .container{
   position: absolute;
   top: 0;
   left: 0;
   height: 100vh;
   width: 80vw;
-  background: rgb(50, 60, 60);
+  background: @fill-body;
   overflow: hidden;
+  color: @color-text-paragraph;
+
+  .header{
+    position: relative;
+    height: 28vh;
+    background:#d8bcac;
+
+    &>div{
+      position: absolute;
+      left: 0;
+      bottom: 10px;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      font-size: 20px;
+
+      img{
+        width: 80px;
+        height: 80px;
+        object-fit: cover;    //解决图片被拉伸的问题
+        border-radius: @radius-circle;
+        padding: 0 20px;
+      }
+    }
+  }
+
+  .contenr{
+   .section{
+     border-bottom: 1px solid #d3d4da;
+     padding: 10px;
+     &:last-child{
+       border-bottom: none;
+     }
+
+     .title{
+       height: 40px;
+       color: #666;
+       line-height: 40px;
+     }
+
+     ul{
+       li{
+         display: flex;
+         align-items: center;
+         height: 45px;
+         font-size: @font-size-base;
+         color: #000;
+
+         div:first-child{
+           width: 20px;
+           height: 20px;
+           font-weight: bold;
+           font-size: 20px;
+
+         }
+         div:nth-child(2){
+           flex-grow: 1;
+           margin: 0 20px;
+         }
+       }
+     }
+   }
+  }
 }
