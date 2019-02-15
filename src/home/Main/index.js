@@ -34,7 +34,7 @@ class Main extends React.Component {
                         <Route path={'/my'} component={MyPage}/>
                         <Route path={'/find'} component={FindPage}/>
                         <Route path={'/toplist'} component={TopListPage}/>
-                        <Route path={`/top/:idx`} component={TopPage}/>
+                        <Route path={`/top/:id`} component={TopPage}/>
                         <Route path={`/search`} component={SearchPage}/>
 
                         <Redirect exact from={'/'} to={'/my'}/>

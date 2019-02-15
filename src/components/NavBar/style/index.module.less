@@ -1,0 +1,42 @@
+@import "../../../assets/style/common";
+
+.navbar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: 100%;
+  height: 44px;
+  line-height: 44px;
+  font-size: 18px;
+  z-index: 99;
+
+  &:before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 44px;
+    background-color: hsla(0,0%,4%,.2);
+  }
+
+  .iconfont{
+    position: absolute;
+    z-index: 10;
+    left: 15px;
+    font-size: 25px;
+    color: #fff;
+  }
+  .title{
+    position: absolute;
+    left: 15%;
+    width: 70%;
+    height: 44px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    .ellipsis();
+  }
+}

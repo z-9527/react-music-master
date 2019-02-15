@@ -1,0 +1,52 @@
+.container{
+  position: relative;
+  height: 250px;
+  color: #fff;
+  overflow: hidden;
+
+  .bg-img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    -webkit-filter: blur(36px);
+    filter: blur(36px);
+    transform: scale(1.1);
+  }
+
+  .info-wrapper{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    padding: 30px 20px 0;
+
+    overflow: hidden;
+    background: rgba(0,0,0,.3);
+
+    .left{
+      position: relative;
+      width: 125px;
+      height: 125px;
+
+      img{
+        width: 125px;
+        height: 125px;
+      }
+      p{
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+      }
+    }
+
+  }
+}

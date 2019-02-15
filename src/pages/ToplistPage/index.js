@@ -3,6 +3,7 @@ import { get } from '@/utils/ajax'
 import Loading from '@/components/Loading/index'
 import style from './style/index.module.less'
 import { withRouter } from 'react-router-dom'
+import Scroll from '@/components/Scroll'
 
 
 @withRouter
@@ -21,41 +22,44 @@ class Index extends React.Component {
         this.setState({
             loading: true
         })
-
+        //获取单个排行榜详情内容用歌单接口
         const res = await get('/toplist/detail')
         const list = res.list || []
-
+        this.wrapper && this.wrapper.refresh()
         this.setState({
             loading: false,
-            topList: list.slice(0, 4)
+            topList: list
         })
-        console.log(res)
     }
-    goDetail = (index) => {
+    goDetail = (id) => {
         const {history} = this.props
-        history.push(`/top/${index}`)
+        history.push(`/top/${id}`)
     }
 
     render () {
         const {loading, topList} = this.state
         return (
             <div className={style.container}>
-                <ul>
-                    {topList && topList.map((item, index) => {
-                        return (
-                            <li key={item.id} className={style['top-item']} onClick={() => this.goDetail(index)}>
-                                <img src={item.coverImgUrl} alt=""/>
-                                <div className={style['top-info']}>
-                                    <div className={style.name}>{item.name}</div>
-                                    <div>
-                                        {item.tracks && item.tracks.map((song, index) => <p key={song.first}>{index + 1}.{song.first}- {song.second}</p>)}
-                                    </div>
-                                </div>
-                            </li>
-                        )
-                    })}
-                </ul>
-                <Loading loading={loading}/>
+                <Scroll ref={el=>this.wrapper=el}>
+                    <div>
+                        <ul>
+                            {topList && topList.map((item) => {
+                                return (
+                                    <li key={item.id} className={style['top-item']} onClick={() => this.goDetail(item.id)}>
+                                        <img src={item.coverImgUrl} alt=""/>
+                                        <div className={style['top-info']}>
+                                            <div className={style.name}>{item.name}</div>
+                                            <div>
+                                                {item.tracks && item.tracks.map((song, index) => <p key={song.first}>{index + 1}.{song.first}- {song.second}</p>)}
+                                            </div>
+                                        </div>
+                                    </li>
+                                )
+                            })}
+                        </ul>
+                        <Loading loading={loading}/>
+                    </div>
+                </Scroll>
             </div>
         )
     }
