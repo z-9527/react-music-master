@@ -33,7 +33,7 @@ class Index extends React.Component {
     }
     goDetail = (id) => {
         const {history} = this.props
-        history.push(`/top/${id}`)
+        history.push(`/sheet/${id}?isTop=1`)
     }
 
     render () {

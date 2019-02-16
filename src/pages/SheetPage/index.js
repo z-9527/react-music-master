@@ -34,9 +34,7 @@ class Detail extends React.Component{
             <div className={style.container}>
                 <div style={{display:detail.name?'':'none'}}>
                     <NavBar>{detail.name}</NavBar>
-                    <HeaderInfo info={detail}>
-
-                    </HeaderInfo>
+                    <HeaderInfo info={detail}/>
 
                 </div>
                 <Loading loading={loading}/>

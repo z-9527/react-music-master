@@ -7,7 +7,7 @@ import asyncComponent from '@/utils/AsyncComponent'
 const MyPage = asyncComponent(()=>import('../../pages/MyPage/index'))          //我的页面
 const FindPage = asyncComponent(()=>import('../../pages/FindPage/index'))          //发现页面
 const TopListPage = asyncComponent(()=>import('../../pages/ToplistPage/index'))     //排行榜列表页面
-const TopPage = asyncComponent(()=>import('../../pages/TopPage/index'))             //排行榜页面
+const SheetPage = asyncComponent(()=>import('../../pages/SheetPage/index'))             //排行榜页面
 const SearchPage = asyncComponent(()=>import('../../pages/SearchPage/index'))             //搜索页面
 
 @inject('appStore') @withRouter @observer
@@ -34,10 +34,10 @@ class Main extends React.Component {
                         <Route path={'/my'} component={MyPage}/>
                         <Route path={'/find'} component={FindPage}/>
                         <Route path={'/toplist'} component={TopListPage}/>
-                        <Route path={`/top/:id`} component={TopPage}/>
+                        <Route path={`/sheet/:id`} component={SheetPage}/>
                         <Route path={`/search`} component={SearchPage}/>
 
-                        <Redirect exact from={'/'} to={'/my'}/>
+                        <Redirect exact from={'/'} to={'/find'}/>
                     </Switch>
                 </div>
 
