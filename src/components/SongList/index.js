@@ -32,8 +32,6 @@ class SongList extends React.Component {
         if (this.props.list !== prevProps.list) {
             this.setState({
                 list:this.props.list
-            },()=>{
-                this.scroll && this.scroll.refresh()
             })
         }
     }

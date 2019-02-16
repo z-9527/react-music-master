@@ -32,11 +32,7 @@ class Index extends React.Component{
             this.getHotSingers(),
             this.getRecommends(),
             this.getHighqualitys()
-        ]).then(()=>{
-            setTimeout(()=>{
-                this.wrapper && this.wrapper.refresh()   //为什么有时候还是不能滚动
-            },17)
-        })
+        ])
     }
     getBanners = async ()=>{
         const res = await get('/banner')
@@ -91,7 +87,7 @@ class Index extends React.Component{
 
         return(
             <div className={style.container}>
-                <Scroll ref={wrapper=>this.wrapper=wrapper}>
+                <Scroll>
                     <div>
                         <div className={style['banners-box']}>
                             <Carousel infinite autoplay>

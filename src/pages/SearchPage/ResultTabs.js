@@ -5,6 +5,7 @@ import Loading from '@/components/Loading'
 import style from './style/resultTabs.module.less'
 import {formatNumber} from '@/utils/util'
 import dayjs from 'dayjs'
+import Scroll from '@/components/Scroll'
 
 class ResultTabs extends React.Component{
     state = {
@@ -102,85 +103,93 @@ class ResultTabs extends React.Component{
                 <Tabs tabs={tabs} onTabClick={this.handleTabClick} page={page} swipeable={false} animated={false}>
                     {/*单曲*/}
                     <div className={`${style['tab-item']} ${style.songs}`}>
-                        <ul>
-                            {songs && songs.map(item=><li key={item.id}>
-                                <div className={style.left}>
-                                    <p className={style.title}>{item.name}</p>
-                                    <p className={style.info}>
-                                        {item.artists && item.artists.reduce((init,current,index)=>{
-                                            if(index < item.artists.length - 1 ){
-                                                init += current.name + ' / '
-                                            } else {
-                                                init += current.name + ' - '
-                                            }
-                                            return init
-                                        },'')}
-                                        {item.album && item.album.name}
-                                    </p>
-                                </div>
-                                <div className={'iconfont icon-erji1'}/>
-                            </li>)}
-                        </ul>
-                        <Loading loading={searchLoading} style={{position:'absolute',top:'40%'}}/>
-                        {!searchLoading && !songs.length && <NoResult/>}
+                        <Scroll>
+                            <ul>
+                                {songs && songs.map(item=><li key={item.id}>
+                                    <div className={style.left}>
+                                        <p className={style.title}>{item.name}</p>
+                                        <p className={style.info}>
+                                            {item.artists && item.artists.reduce((init,current,index)=>{
+                                                if(index < item.artists.length - 1 ){
+                                                    init += current.name + ' / '
+                                                } else {
+                                                    init += current.name + ' - '
+                                                }
+                                                return init
+                                            },'')}
+                                            {item.album && item.album.name}
+                                        </p>
+                                    </div>
+                                    <div className={'iconfont icon-erji1'}/>
+                                </li>)}
+                            </ul>
+                            <Loading loading={searchLoading} style={{position:'absolute',top:'40%'}}/>
+                            {!searchLoading && !songs.length && <NoResult/>}
+                        </Scroll>
                     </div>
                     {/*专辑*/}
                     <div className={`${style['tab-item']} ${style.albums}`}>
-                        <ul>
-                            {albums && albums.map(item=><li key={item.id}>
-                                <img src={item.picUrl} alt=""/>
-                                <div className={style.info}>
-                                    <div>{item.name}</div>
-                                    <div className={style['sub-info']}>
-                                        {item.artists && item.artists.reduce((init,current,index)=>{
-                                            if(index < item.artists.length - 1 ){
-                                                init += current.name + '/'
-                                            } else {
-                                                init += current.name + '  '
-                                            }
-                                            return init
-                                        },'')}
-                                        {item.size}首&nbsp;
-                                        {dayjs(item.publishTime).format('YYYY-MM-DD')}
+                        <Scroll>
+                            <ul>
+                                {albums && albums.map(item=><li key={item.id}>
+                                    <img src={item.picUrl} alt=""/>
+                                    <div className={style.info}>
+                                        <div>{item.name}</div>
+                                        <div className={style['sub-info']}>
+                                            {item.artists && item.artists.reduce((init,current,index)=>{
+                                                if(index < item.artists.length - 1 ){
+                                                    init += current.name + '/'
+                                                } else {
+                                                    init += current.name + '  '
+                                                }
+                                                return init
+                                            },'')}
+                                            {item.size}首&nbsp;
+                                            {dayjs(item.publishTime).format('YYYY-MM-DD')}
+                                        </div>
                                     </div>
-                                </div>
-                            </li>)}
-                        </ul>
-                        <Loading loading={searchLoading} style={{position:'absolute',top:'40%'}}/>
-                        {!searchLoading && !albums.length && <NoResult/>}
+                                </li>)}
+                            </ul>
+                            <Loading loading={searchLoading} style={{position:'absolute',top:'40%'}}/>
+                            {!searchLoading && !albums.length && <NoResult/>}
+                        </Scroll>
                     </div>
                     {/*歌手*/}
                     <div className={`${style['tab-item']} ${style.artists}`}>
-                        <ul>
-                            {artists && artists.map(item=><li key={item.id}>
-                                <img src={item.img1v1Url} alt="" style={{borderRadius:'50%'}}/>
-                                <div className={style.info}>
-                                    <div>{item.name}</div>
-                                    <div className={style['sub-info']}>
-                                        <span style={{display:item.albumSize?'':'none'}}>专辑:{item.albumSize}</span>&emsp;
-                                        <span style={{display:item.mvSize?'':'none'}}>MV:{item.mvSize}</span>
+                        <Scroll>
+                            <ul>
+                                {artists && artists.map(item=><li key={item.id}>
+                                    <img src={item.img1v1Url} alt="" style={{borderRadius:'50%'}}/>
+                                    <div className={style.info}>
+                                        <div>{item.name}</div>
+                                        <div className={style['sub-info']}>
+                                            <span style={{display:item.albumSize?'':'none'}}>专辑:{item.albumSize}</span>&emsp;
+                                            <span style={{display:item.mvSize?'':'none'}}>MV:{item.mvSize}</span>
+                                        </div>
                                     </div>
-                                </div>
-                            </li>)}
-                        </ul>
-                        <Loading loading={searchLoading} style={{position:'absolute',top:'40%'}}/>
-                        {!searchLoading && !artists.length && <NoResult/>}
+                                </li>)}
+                            </ul>
+                            <Loading loading={searchLoading} style={{position:'absolute',top:'40%'}}/>
+                            {!searchLoading && !artists.length && <NoResult/>}
+                        </Scroll>
                     </div>
                     {/*歌单*/}
                     <div className={`${style['tab-item']} ${style.playlists}`}>
-                        <ul>
-                            {playlists && playlists.map(item=><li key={item.id}>
-                                <img src={item.coverImgUrl} alt=""/>
-                                <div className={style.info}>
-                                    <div>{item.name}</div>
-                                    <div className={style['sub-info']}>
-                                        {item.trackCount}首 - {item.creator.nickname}  播放{formatNumber(item.playCount)}次
+                        <Scroll>
+                            <ul>
+                                {playlists && playlists.map(item=><li key={item.id}>
+                                    <img src={item.coverImgUrl} alt=""/>
+                                    <div className={style.info}>
+                                        <div>{item.name}</div>
+                                        <div className={style['sub-info']}>
+                                            {item.trackCount}首 - {item.creator.nickname}  播放{formatNumber(item.playCount)}次
+                                        </div>
                                     </div>
-                                </div>
-                            </li>)}
-                        </ul>
-                        <Loading loading={searchLoading} style={{position:'absolute',top:'40%'}}/>
-                        {!searchLoading && !playlists.length && <NoResult/>}
+                                </li>)}
+                            </ul>
+                            <Loading loading={searchLoading} style={{position:'absolute',top:'40%'}}/>
+                            {!searchLoading && !playlists.length && <NoResult/>}
+                        </Scroll>
                     </div>
                 </Tabs>
             </div>

@@ -25,7 +25,6 @@ class Index extends React.Component {
         //获取单个排行榜详情内容用歌单接口
         const res = await get('/toplist/detail')
         const list = res.list || []
-        this.wrapper && this.wrapper.refresh()
         this.setState({
             loading: false,
             topList: list
@@ -40,7 +39,7 @@ class Index extends React.Component {
         const {loading, topList} = this.state
         return (
             <div className={style.container}>
-                <Scroll ref={el=>this.wrapper=el}>
+                <Scroll>
                     <div>
                         <ul>
                             {topList && topList.map((item) => {
