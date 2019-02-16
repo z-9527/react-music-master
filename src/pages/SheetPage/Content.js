@@ -29,9 +29,10 @@ class Content extends React.Component{
 
     //外部的info是异步获取的，所以这里用此生命周期而不用componentDidMount
     componentDidUpdate(prevProps){
-        if (this.props.info !== prevProps.info) {
+        const info = this.props.info
+        if (info !== prevProps.info) {
             this.setState({
-                songs: this.props.info.tracks.slice(0,30) //避免第一次的延迟，
+                songs: info.tracks ? info.tracks.slice(0,30) : [] //避免第一次的延迟，
             })
         }
     }

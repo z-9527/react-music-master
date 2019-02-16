@@ -6,7 +6,9 @@ import style from './style/resultTabs.module.less'
 import {formatNumber} from '@/utils/util'
 import dayjs from 'dayjs'
 import Scroll from '@/components/Scroll'
+import {withRouter} from 'react-router-dom'
 
+@withRouter
 class ResultTabs extends React.Component{
     state = {
         page:0,  //当前Tab索引
@@ -80,7 +82,9 @@ class ResultTabs extends React.Component{
         const {keywords} = this.props
         this.getResult(keywords,tab.type)
     }
-
+    goTo = (page,id)=>{
+        this.props.history.push(`/${page}/${id}`)
+    }
 
 
     render(){
@@ -177,7 +181,7 @@ class ResultTabs extends React.Component{
                     <div className={`${style['tab-item']} ${style.playlists}`}>
                         <Scroll>
                             <ul>
-                                {playlists && playlists.map(item=><li key={item.id}>
+                                {playlists && playlists.map(item=><li key={item.id} onClick={()=>this.goTo('sheet',item.id)}>
                                     <img src={item.coverImgUrl} alt=""/>
                                     <div className={style.info}>
                                         <div>{item.name}</div>
