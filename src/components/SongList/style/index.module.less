@@ -1,0 +1,58 @@
+@import "../../../assets/style/common";
+
+.song-list-box{
+  height: 100%;
+  width: 100%;
+
+  ul{
+    li{
+      display: flex;
+      align-items: center;
+      padding: 20px;
+      color: #777;
+
+      &:last-child{
+        padding-bottom: 10px;
+      }
+
+      .num{
+        font-size: 16px;
+        margin-right: 20px;
+      }
+      .red{
+        color: #ff400b;;
+      }
+      .pic{
+        img{
+          height: 40px;
+          width: 40px;
+          margin-right: 10px;
+        }
+      }
+      .text{
+        flex-grow: 1;
+        overflow: hidden;
+
+        h3{
+          width: 100%;
+          font-size: 15px;
+          color: #444;
+          .ellipsis();
+          font-weight: bold;
+        }
+        div{
+          width: 100%;
+          font-size: 12px;
+          margin-top: 5px;
+          .ellipsis();
+        }
+      }
+    }
+  }
+
+  .loading{
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+  }
+}

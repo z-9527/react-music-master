@@ -5,7 +5,6 @@ import dayjs from 'dayjs'
 
 const HeaderInfo = (props)=> {
     const info = props.info
-    console.log(111,info)
     return (
         <div className={style.container}>
             <img src={info.coverImgUrl || ''} alt="" className={style['bg-img']}/>

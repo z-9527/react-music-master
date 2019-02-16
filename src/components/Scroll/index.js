@@ -1,7 +1,14 @@
 import React from 'react'
 import BScroll from 'better-scroll'
+import PropTypes from 'prop-types';
 
 class Scroll extends React.Component {
+    static propTypes = {
+        onPullingUp:PropTypes.func,
+    }
+    static defaultProps = {
+        onPullingUp: ()=>{}
+    }
 
     componentDidMount () {
         this.initScroll()
@@ -15,11 +22,16 @@ class Scroll extends React.Component {
     initScroll = ()=>{
         this.scroll = new BScroll(this.wrapper,{
             click:true,
-            mouseWheel:true
+            mouseWheel:true,
+            pullUpLoad: true
         })
+        this.scroll.on('pullingUp', this.props.onPullingUp)
     }
     refresh = ()=>{
         this.scroll && this.scroll.refresh()
+    }
+    finishPullUp = ()=>{
+        this.scroll && this.scroll.finishPullUp()
     }
     destroy = ()=>{
         this.scroll.destroy()

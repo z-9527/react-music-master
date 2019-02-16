@@ -5,6 +5,7 @@ import {get} from '@/utils/ajax'
 import Loading from '@/components/Loading'
 import NavBar from '@/components/NavBar'
 import HeaderInfo from '@/components/HeaderInfo'
+import Content from './Content'
 
 @withRouter
 class Detail extends React.Component{
@@ -35,7 +36,7 @@ class Detail extends React.Component{
                 <div style={{display:detail.name?'':'none'}}>
                     <NavBar>{detail.name}</NavBar>
                     <HeaderInfo info={detail}/>
-
+                    <Content info={detail}/>
                 </div>
                 <Loading loading={loading}/>
             </div>
