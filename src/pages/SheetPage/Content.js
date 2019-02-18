@@ -4,15 +4,7 @@ import style from './style/content.module.less'
 import Scroll from '@/components/Scroll'
 import SongList from '@/components/SongList'
 import PropTypes from 'prop-types'
-
-
-
-function createMarkup(description) {
-    if(description){
-        description = description.replace(/(\r\n|\n|\r)/gm, "<br />")
-        return {__html: description};
-    }
-}
+import {createMarkup} from '@/utils/util'
 
 
 class Content extends React.Component{

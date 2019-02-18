@@ -9,6 +9,7 @@ const FindPage = asyncComponent(()=>import('../../pages/FindPage/index'))       
 const TopListPage = asyncComponent(()=>import('../../pages/ToplistPage/index'))     //排行榜列表页面
 const SheetPage = asyncComponent(()=>import('../../pages/SheetPage/index'))             //排行榜页面
 const SearchPage = asyncComponent(()=>import('../../pages/SearchPage/index'))             //搜索页面
+const SingerPage = asyncComponent(()=>import('../../pages/SingerPage/index'))             //歌手详情页面
 
 @inject('appStore') @withRouter @observer
 class Main extends React.Component {
@@ -36,6 +37,7 @@ class Main extends React.Component {
                         <Route path={'/toplist'} component={TopListPage}/>
                         <Route path={`/sheet/:id`} component={SheetPage}/>
                         <Route path={`/search`} component={SearchPage}/>
+                        <Route path={`/singer/:id`} component={SingerPage}/>
 
                         <Redirect exact from={'/'} to={'/find'}/>
                     </Switch>
