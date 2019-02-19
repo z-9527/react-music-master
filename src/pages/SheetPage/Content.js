@@ -5,6 +5,7 @@ import Scroll from '@/components/Scroll'
 import SongList from '@/components/SongList'
 import PropTypes from 'prop-types'
 import {createMarkup} from '@/utils/util'
+import Loading from '@/components/Loading'
 
 
 class Content extends React.Component{
@@ -73,6 +74,7 @@ class Content extends React.Component{
                <Tabs tabs={tabs} swipeable={false}>
                    <div style={{height:'calc(100vh - 300px)'}}>
                        <SongList list={songs} loading={loading} loadingMore={this.loadingMore}/>
+                       <Loading loading={this.props.loading}/>
                    </div>
                    <div style={{height:'calc(100vh - 300px)'}}>
                        <Scroll>

@@ -162,7 +162,7 @@ class ResultTabs extends React.Component{
                     <div className={`${style['tab-item']} ${style.artists}`}>
                         <Scroll>
                             <ul>
-                                {artists && artists.map(item=><li key={item.id}>
+                                {artists && artists.map(item=><li key={item.id} onClick={()=>this.goTo('singer',item.id)}>
                                     <img src={item.img1v1Url} alt="" style={{borderRadius:'50%'}}/>
                                     <div className={style.info}>
                                         <div>{item.name}</div>

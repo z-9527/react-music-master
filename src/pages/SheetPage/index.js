@@ -23,7 +23,6 @@ class Detail extends React.Component{
             loading:true
         })
         const res = await get(`/playlist/detail?id=${id}`)
-        console.log(res)
         this.setState({
             detail:res.playlist || {},
             loading:false
@@ -33,12 +32,11 @@ class Detail extends React.Component{
         const {loading,detail} = this.state
         return (
             <div className={style.container}>
-                <div style={{display:detail.name?'':'none'}}>
+                <div>
                     <NavBar>{detail.name}</NavBar>
                     <HeaderInfo info={detail}/>
-                    <Content info={detail}/>
+                    <Content info={detail} loading={loading}/>
                 </div>
-                <Loading loading={loading}/>
             </div>
         )
     }
