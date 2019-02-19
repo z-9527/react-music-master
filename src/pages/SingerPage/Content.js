@@ -134,7 +134,9 @@ class Content extends React.Component{
                             <ul className={style.albums}>
                                 {
                                     albums && albums.map(item=><li key={item.id}>
-                                        <img src={item.picUrl} alt=""/>
+                                        <div>
+                                            <img src={item.picUrl} alt=""/>
+                                        </div>
                                         <div className={style.right}>
                                             <div className={style.title}>{item.name}</div>
                                             <div>{dayjs(item.publishTime).format('YYYY-MM-DD')} 歌曲{item.size}</div>
@@ -151,7 +153,9 @@ class Content extends React.Component{
                             <ul className={style.mvs}>
                                 {
                                     mvs && mvs.map(item=><li key={item.id} onClick={this.showInfo}>
-                                        <img src={item.imgurl16v9} alt="" style={{width:120}}/>
+                                        <div>
+                                            <img src={item.imgurl16v9} alt="" style={{width:120}}/>
+                                        </div>
                                         <div className={style.right}>
                                             <div className={style.title}>{item.name}</div>
                                             <div>{dayjs(item.publishTime).format('YYYY-MM-DD')}</div>
