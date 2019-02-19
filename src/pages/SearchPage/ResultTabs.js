@@ -136,7 +136,9 @@ class ResultTabs extends React.Component{
                         <Scroll>
                             <ul>
                                 {albums && albums.map(item=><li key={item.id}>
-                                    <img src={item.picUrl} alt=""/>
+                                    <div>
+                                        <img src={item.picUrl} alt=""/>
+                                    </div>
                                     <div className={style.info}>
                                         <div>{item.name}</div>
                                         <div className={style['sub-info']}>
@@ -163,7 +165,9 @@ class ResultTabs extends React.Component{
                         <Scroll>
                             <ul>
                                 {artists && artists.map(item=><li key={item.id} onClick={()=>this.goTo('singer',item.id)}>
-                                    <img src={item.img1v1Url} alt="" style={{borderRadius:'50%'}}/>
+                                    <div>
+                                        <img src={item.img1v1Url} alt="" style={{borderRadius:'50%'}}/>
+                                    </div>
                                     <div className={style.info}>
                                         <div>{item.name}</div>
                                         <div className={style['sub-info']}>
@@ -182,7 +186,9 @@ class ResultTabs extends React.Component{
                         <Scroll>
                             <ul>
                                 {playlists && playlists.map(item=><li key={item.id} onClick={()=>this.goTo('sheet',item.id)}>
-                                    <img src={item.coverImgUrl} alt=""/>
+                                    <div>
+                                        <img src={item.coverImgUrl} alt=""/>
+                                    </div>
                                     <div className={style.info}>
                                         <div>{item.name}</div>
                                         <div className={style['sub-info']}>
