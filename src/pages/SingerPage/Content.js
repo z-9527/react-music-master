@@ -7,6 +7,8 @@ import SongList from '@/components/SongList'
 import Loading from '@/components/Loading'
 import {createMarkup} from '@/utils/util'
 import Scroll from '@/components/Scroll'
+import dayjs from 'dayjs'
+import {Toast} from 'antd-mobile'
 
 @withRouter
 class Content extends React.Component{
@@ -15,7 +17,9 @@ class Content extends React.Component{
         songs: [], //歌手单曲
         songsLoading: false, //获取单曲的loading
         albums: [], //歌手专辑
+        albumsLoading:false , //获取专辑的loading
         mvs: [], //歌手mv
+        mvsLoading:false,//获取mv的loading
         info:{},  //歌手信息
         infoLoading:false //获取信息的loading
     }
@@ -40,6 +44,32 @@ class Content extends React.Component{
             songs:res.hotSongs || []
         })
     }
+    getAlbums = async (id)=>{
+        if(this.state.albums.length){
+            return
+        }
+        this.setState({
+            albumsLoading:true
+        })
+        const res = await get(`/artist/album?id=${id}`)
+        this.setState({
+            albumsLoading:false,
+            albums:res.hotAlbums || []
+        })
+    }
+    getMvs = async (id)=>{
+        if(this.state.mvs.length){
+            return
+        }
+        this.setState({
+            mvsLoading:true
+        })
+        const res = await get(`/artist/mv?id=${id}`)
+        this.setState({
+            mvsLoading:false,
+            mvs:res.mvs || []
+        })
+    }
     getInfo = async (id)=>{
         if(this.state.info.briefDesc){
             return
@@ -60,15 +90,29 @@ class Content extends React.Component{
                 this.getSongs(id)
                 break;
             }
+            case 1:{
+                this.getAlbums(id)
+                break;
+            }
+            case 2:{
+                this.getMvs(id)
+                break;
+            }
             case 3:{
                 this.getInfo(id)
                 break;
             }
+            default :{
+                this.getSongs(id)
+            }
         }
+    }
+    showInfo = ()=>{
+        Toast.info('暂无MV功能!!!!!',1)
     }
 
     render(){
-        const {songs,songsLoading,info,infoLoading} = this.state
+        const {songs,songsLoading,albums,albumsLoading,mvs,mvsLoading,info,infoLoading} = this.state
         const tabs = [
             {title:'单曲'},
             {title:'专辑'},
@@ -85,9 +129,39 @@ class Content extends React.Component{
                         <Loading loading={songsLoading} style={{position:'absolute',top:'30%'}}/>
                     </div>
                     {/*专辑*/}
-                    <div>专辑</div>
+                    <div className={style['tab-item']} style={height}>
+                        <Scroll>
+                            <ul className={style.albums}>
+                                {
+                                    albums && albums.map(item=><li key={item.id}>
+                                        <img src={item.picUrl} alt=""/>
+                                        <div className={style.right}>
+                                            <div className={style.title}>{item.name}</div>
+                                            <div>{dayjs(item.publishTime).format('YYYY-MM-DD')} 歌曲{item.size}</div>
+                                        </div>
+                                    </li>)
+                                }
+                            </ul>
+                        </Scroll>
+                        <Loading loading={albumsLoading} style={{position:'absolute',top:'30%'}}/>
+                    </div>
                     {/*MV*/}
-                    <div>MV</div>
+                    <div className={style['tab-item']} style={height}>
+                        <Scroll>
+                            <ul className={style.mvs}>
+                                {
+                                    mvs && mvs.map(item=><li key={item.id} onClick={this.showInfo}>
+                                        <img src={item.imgurl16v9} alt="" style={{width:120}}/>
+                                        <div className={style.right}>
+                                            <div className={style.title}>{item.name}</div>
+                                            <div>{dayjs(item.publishTime).format('YYYY-MM-DD')}</div>
+                                        </div>
+                                    </li>)
+                                }
+                            </ul>
+                        </Scroll>
+                        <Loading loading={mvsLoading} style={{position:'absolute',top:'30%'}}/>
+                    </div>
                     {/*简介*/}
                     <div className={style['tab-item']} style={height}>
                         <Scroll>
