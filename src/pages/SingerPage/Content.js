@@ -110,6 +110,9 @@ class Content extends React.Component{
     showInfo = ()=>{
         Toast.info('暂无MV功能!!!!!',1)
     }
+    goTo = (id)=>{
+        this.props.history.push(`/album/${id}`)
+    }
 
     render(){
         const {songs,songsLoading,albums,albumsLoading,mvs,mvsLoading,info,infoLoading} = this.state
@@ -133,7 +136,7 @@ class Content extends React.Component{
                         <Scroll>
                             <ul className={style.albums}>
                                 {
-                                    albums && albums.map(item=><li key={item.id}>
+                                    albums && albums.map(item=><li key={item.id} onClick={()=>this.goTo(item.id)}>
                                         <div>
                                             <img src={item.picUrl} alt=""/>
                                         </div>

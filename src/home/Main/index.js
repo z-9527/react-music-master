@@ -10,6 +10,7 @@ const TopListPage = asyncComponent(()=>import('../../pages/ToplistPage/index')) 
 const SheetPage = asyncComponent(()=>import('../../pages/SheetPage/index'))             //排行榜页面
 const SearchPage = asyncComponent(()=>import('../../pages/SearchPage/index'))             //搜索页面
 const SingerPage = asyncComponent(()=>import('../../pages/SingerPage/index'))             //歌手详情页面
+const AlbumPage = asyncComponent(()=>import('../../pages/AlbumPage/index'))             //专辑页面
 
 @inject('appStore') @withRouter @observer
 class Main extends React.Component {
@@ -38,6 +39,7 @@ class Main extends React.Component {
                         <Route path={`/sheet/:id`} component={SheetPage}/>
                         <Route path={`/search`} component={SearchPage}/>
                         <Route path={`/singer/:id`} component={SingerPage}/>
+                        <Route path={`/album/:id`} component={AlbumPage}/>
 
                         <Redirect exact from={'/'} to={'/find'}/>
                     </Switch>

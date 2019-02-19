@@ -135,7 +135,7 @@ class ResultTabs extends React.Component{
                     <div className={`${style['tab-item']} ${style.albums}`}>
                         <Scroll>
                             <ul>
-                                {albums && albums.map(item=><li key={item.id}>
+                                {albums && albums.map(item=><li key={item.id} onClick={()=>this.goTo('album',item.id)}>
                                     <div>
                                         <img src={item.picUrl} alt=""/>
                                     </div>
