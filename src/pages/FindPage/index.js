@@ -69,14 +69,14 @@ class Index extends React.Component{
             {
                 title:'热门歌手',
                 icon:'icon-remen1',
-                url:'1',
+                url:'/artists',
                 color:'#dd4330'
             },
             {
                 title:'每日推荐',
-                icon:'icon-remen1',
-                url:'1',
-                color:'#dd4330'
+                icon:'icon-PCbofangye_paihangbang',
+                url:'/playlists',
+                color:'orange'
             },
             {
                 title:'歌单',
@@ -106,7 +106,7 @@ class Index extends React.Component{
                         <div className={style['hot-singer-box']}>
                             <div className={style['title-box']}>
                                 <div>热门歌手</div>
-                                <Link to={'/hotSingers'}>查看全部</Link>
+                                <Link to={'/artists'}>查看全部</Link>
                             </div>
                             <ul>
                                 {hotSingerList && hotSingerList.map(singer=><li key={singer.id}>

@@ -118,7 +118,7 @@ class PlayListsPage extends React.Component {
                 playlists:this.state.playlists.concat(res.playlists || []),
                 haveMore:res.more
             })
-            this.scroll.finishPullUp()
+            this.scroll && this.scroll.finishPullUp()
         },2000)
     }
 
