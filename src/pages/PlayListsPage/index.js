@@ -27,7 +27,7 @@ class PlayListsPage extends React.Component {
     getHeaderInfo = async ()=>{
         const res = await get('/top/playlist/highquality')
         this.setState({
-            headerInfo:res.playlists && res.playlists[0] || {}
+            headerInfo: res.playlists ? (res.playlists[0] || {}) : {}
         })
     }
 
