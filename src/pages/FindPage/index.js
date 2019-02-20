@@ -3,13 +3,14 @@ import {get} from '@/utils/ajax'
 import style from './style/index.module.less'
 import {Carousel} from 'antd-mobile'
 import image from './img/1.png'
-import {Link} from 'react-router-dom'
+import {Link,withRouter} from 'react-router-dom'
 import Scroll from '@/components/Scroll'
 import {formatNumber} from '@/utils/util'
 
 // https://www.cnblogs.com/zyl-Tara/p/7998590.html
 // 关于react中切换路由时报以上错误，实际的原因是因为在组件挂载（mounted）之后进行了异步操作，比如ajax请求或者设置了定时器等，而你在callback中进行了setState操作。当你切换路由时，组件已经被卸载（unmounted）了，此时异步操作中callback还在执行，因此setState没有得到值。
 
+@withRouter
 class Index extends React.Component{
     state = {
         banners:[{imageUrl:image}], //给一个初始值，避免在数据返回之前为空数组
@@ -79,9 +80,9 @@ class Index extends React.Component{
             },
             {
                 title:'歌单',
-                icon:'icon-remen',
-                url:'1',
-                color:'#dd4330'
+                icon:'icon-liebiao1',
+                url:'/playlists',
+                color:'#16c2c2',
             },
         ]
 
@@ -96,8 +97,10 @@ class Index extends React.Component{
                         </div>
                         <div className={style.menu}>
                             {menu.map(item=><div key={item.title}>
-                                <div className={`iconfont ${style.icon} ${item.icon}`} style={{color:item.color}}/>
-                                <div>{item.title}</div>
+                                <Link to={item.url}>
+                                    <div className={`iconfont ${style.icon} ${item.icon}`} style={{color:item.color}}/>
+                                    <div>{item.title}</div>
+                                </Link>
                             </div>)}
                         </div>
                         <div className={style['hot-singer-box']}>
@@ -115,7 +118,8 @@ class Index extends React.Component{
                             </ul>
                         </div>
                         <div className={style['recommend-box']}>
-                            <div>每日推荐 <span className={'iconfont icon-iconfontjiantou5'} style={{fontSize:12}}/></div>
+                            <div onClick={()=>this.props.history.push('/playlists')}>每日推荐 <span className={'iconfont' +
+                            ' icon-iconfontjiantou5'} style={{fontSize:12}}/></div>
                             <ul>
                                 {recommendList && recommendList.map(sheet=><li key={sheet.id}>
                                     <Link to={`/sheet/${sheet.id}`} className={style['sheet-box']}>
@@ -127,7 +131,7 @@ class Index extends React.Component{
                             </ul>
                         </div>
                         <div className={style['recommend-box']}>
-                            <div>精品歌单 <span className={'iconfont icon-iconfontjiantou5'} style={{fontSize:12}}/></div>
+                            <div onClick={()=>this.props.history.push('/playlists')}>精品歌单 <span className={'iconfont icon-iconfontjiantou5'} style={{fontSize:12}}/></div>
                             <ul>
                                 {highqualityList && highqualityList.map(sheet=><li key={sheet.id}>
                                     <Link to={`/sheet/${sheet.id}`} className={style['sheet-box']}>

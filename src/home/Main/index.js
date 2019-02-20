@@ -7,10 +7,11 @@ import asyncComponent from '@/utils/AsyncComponent'
 const MyPage = asyncComponent(()=>import('../../pages/MyPage/index'))          //我的页面
 const FindPage = asyncComponent(()=>import('../../pages/FindPage/index'))          //发现页面
 const TopListPage = asyncComponent(()=>import('../../pages/ToplistPage/index'))     //排行榜列表页面
-const SheetPage = asyncComponent(()=>import('../../pages/SheetPage/index'))             //排行榜页面
+const SheetPage = asyncComponent(()=>import('../../pages/SheetPage/index'))             //歌单详情页面
 const SearchPage = asyncComponent(()=>import('../../pages/SearchPage/index'))             //搜索页面
 const SingerPage = asyncComponent(()=>import('../../pages/SingerPage/index'))             //歌手详情页面
 const AlbumPage = asyncComponent(()=>import('../../pages/AlbumPage/index'))             //专辑页面
+const PlayListsPage = asyncComponent(()=>import('../../pages/PlayListsPage/index'))             //歌单页面
 
 @inject('appStore') @withRouter @observer
 class Main extends React.Component {
@@ -40,6 +41,7 @@ class Main extends React.Component {
                         <Route path={`/search`} component={SearchPage}/>
                         <Route path={`/singer/:id`} component={SingerPage}/>
                         <Route path={`/album/:id`} component={AlbumPage}/>
+                        <Route path={`/playlists`} component={PlayListsPage}/>
 
                         <Redirect exact from={'/'} to={'/find'}/>
                     </Switch>

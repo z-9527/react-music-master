@@ -1,0 +1,51 @@
+@import "../../../assets/style/default";
+
+.list{
+  ul{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0 5px;
+
+    li{
+      width: 49%;
+      margin-bottom: 10px;
+
+      a{
+        display: block;
+
+        .img-box{
+          position: relative;
+
+          img{
+            width: 100%;
+            border-radius: @radius-base;
+          }
+          p{
+            position: absolute;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+          }
+
+          .playCount{
+            right: 5px;
+            top: 5px;
+          }
+          .user{
+            left: 5px;
+            bottom: 5px;
+          }
+        }
+
+        .name{
+          height: 35px;
+          margin-top: 5px;
+          line-height: 1.2;
+          overflow: hidden;
+          color: @color-text-paragraph;
+        }
+      }
+    }
+  }
+}
