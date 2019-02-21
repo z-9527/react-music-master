@@ -43,14 +43,14 @@ class Content extends React.Component{
         })
 
         let list = []
-        //模拟两秒的网络延迟
+        //增加两秒的延迟，实际项目中可以不用，这里只是为显示这样一个加载中的过程
         setTimeout(()=>{
              list = allList.slice(size,size + 30)
             this.setState({
                 songs:this.state.songs.concat(list),
                 loading:false
             })
-        },3000)
+        },2000)
     }
     loadingMore = ()=>{
         if(this.state.loading){

@@ -111,7 +111,7 @@ class PlayListsPage extends React.Component {
             limit:16,
             offset:this.state.playlists.length
         })
-        //增加两秒的延迟
+        //增加两秒的延迟，实际项目中可以不用，这里只是为显示这样一个加载中的过程
         setTimeout(()=>{
             this.setState({
                 isLoadMore:false,
