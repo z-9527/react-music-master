@@ -8,7 +8,7 @@ import Loading from '@/components/Loading'
 import {createMarkup} from '@/utils/util'
 import Scroll from '@/components/Scroll'
 import dayjs from 'dayjs'
-import {Toast} from 'antd-mobile'
+import {formatNumber} from '@/utils/util'
 
 @withRouter
 class Content extends React.Component{
@@ -107,11 +107,8 @@ class Content extends React.Component{
             }
         }
     }
-    showInfo = ()=>{
-        Toast.info('暂无MV功能!!!!!',1)
-    }
-    goTo = (id)=>{
-        this.props.history.push(`/album/${id}`)
+    goTo = (url)=>{
+        this.props.history.push(url)
     }
 
     render(){
@@ -136,8 +133,8 @@ class Content extends React.Component{
                         <Scroll>
                             <ul className={style.albums}>
                                 {
-                                    albums && albums.map(item=><li key={item.id} onClick={()=>this.goTo(item.id)}>
-                                        <div>
+                                    albums && albums.map(item=><li key={item.id} onClick={()=>this.goTo(`/album/${item.id}`)}>
+                                        <div className={style.left}>
                                             <img src={item.picUrl} alt=""/>
                                         </div>
                                         <div className={style.right}>
@@ -155,9 +152,10 @@ class Content extends React.Component{
                         <Scroll>
                             <ul className={style.mvs}>
                                 {
-                                    mvs && mvs.map(item=><li key={item.id} onClick={this.showInfo}>
-                                        <div>
+                                    mvs && mvs.map(item=><li key={item.id} onClick={()=>this.goTo(`/mv/${item.id}`)}>
+                                        <div className={style.left}>
                                             <img src={item.imgurl16v9} alt="" style={{width:120}}/>
+                                            <p className={style.playCount}><span className={'iconfont icon-bofang1'} style={{fontSize:12}}/> {formatNumber(item.playCount)}</p>
                                         </div>
                                         <div className={style.right}>
                                             <div className={style.title}>{item.name}</div>

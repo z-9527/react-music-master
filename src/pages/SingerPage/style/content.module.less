@@ -17,12 +17,24 @@
       align-items: center;
       margin: 5px;
       color: #666;
-      img{
-        display: block;
-        height: 60px;
-        width: 60px;
+
+      .left{
+        position: relative;
         margin-right: 10px;
-        object-fit: cover;
+        img{
+          display: block;
+          height: 60px;
+          width: 60px;
+          object-fit: cover;
+        }
+        .playCount{
+          position: absolute;
+          right: 5px;
+          top: 5px;
+          color: #fff;
+          font-size: 12px;
+          font-weight: 700;
+        }
       }
       .right{
         flex-grow: 1;
