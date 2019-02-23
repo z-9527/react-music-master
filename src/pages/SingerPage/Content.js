@@ -9,8 +9,9 @@ import {createMarkup} from '@/utils/util'
 import Scroll from '@/components/Scroll'
 import dayjs from 'dayjs'
 import {formatNumber} from '@/utils/util'
+import {inject,observer} from 'mobx-react'
 
-@withRouter
+@withRouter @inject('appStore') @observer
 class Content extends React.Component{
     state = {
         id:'', //歌手ID
@@ -110,6 +111,9 @@ class Content extends React.Component{
     goTo = (url)=>{
         this.props.history.push(url)
     }
+    onSelectSong = (obj)=>{
+        this.props.appStore.onSelectSong(obj)
+    }
 
     render(){
         const {songs,songsLoading,albums,albumsLoading,mvs,mvsLoading,info,infoLoading} = this.state
@@ -125,7 +129,7 @@ class Content extends React.Component{
                 <Tabs tabs={tabs} swipeable={false} onChange={this.handleChange} initialPage={0}>
                     {/*单曲*/}
                     <div className={style['tab-item']} style={height}>
-                        <SongList list={songs}/>
+                        <SongList list={songs} onSelectSong={this.onSelectSong}/>
                         <Loading loading={songsLoading} style={{position:'absolute',top:'30%'}}/>
                     </div>
                     {/*专辑*/}

@@ -3,6 +3,7 @@ import style from './style/index.module.less'
 import { inject, observer } from 'mobx-react'
 import { NavLink, withRouter,Route,Switch,Redirect } from 'react-router-dom'
 import asyncComponent from '@/utils/AsyncComponent'
+import Player from '../Player'
 
 const MyPage = asyncComponent(()=>import('../../pages/MyPage/index'))          //我的页面
 const FindPage = asyncComponent(()=>import('../../pages/FindPage/index'))          //发现页面
@@ -50,6 +51,7 @@ class Main extends React.Component {
                         <Redirect exact from={'/'} to={'/find'}/>
                     </Switch>
                 </div>
+                <Player/>
 
                 {isExpandSider && <div className={style.mask} onClick={this.toggleExpand}/>}
             </div>

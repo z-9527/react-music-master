@@ -8,13 +8,15 @@ class SongList extends React.Component {
         list: PropTypes.array,
         bottomLoadingText: PropTypes.string,
         loading: PropTypes.bool,
-        loadingMore: PropTypes.func
+        loadingMore: PropTypes.func,
+        onSelectSong: PropTypes.func,
     }
     static defaultProps = {
         list: [],
         bottomLoadingText:'加载中...',   //底部loading文字
         loading:false,    //是否正在加载
-        loadingMore:()=>{}
+        loadingMore:()=>{},
+        onSelectSong:()=>{},
 
     }
 
@@ -53,6 +55,14 @@ class SongList extends React.Component {
         await this.props.loadingMore()
         this.scroll && this.scroll.finishPullUp()
     }
+    //一般公共组件不要编写业务逻辑，虽然点击事件都是一样的，但还要从外面传进来
+    onSelectSong = (item,index)=>{
+        this.props.onSelectSong({
+            songlist:this.state.list,
+            song:item,
+            index
+        })
+    }
 
 
     render () {
@@ -65,7 +75,7 @@ class SongList extends React.Component {
                    <div>
                        <ul>
                            {
-                               list && list.map((item,index)=><li key={item.id}>
+                               list && list.map((item,index)=><li key={item.id} onClick={()=>this.onSelectSong(item,index)}>
                                    <div className={`${style.num} ${index<3 ? style.red : ''}`}>{index + 1}</div>
                                    <div className={style.pic}>
                                        <img src={item.al && item.al.picUrl} alt=""/>
