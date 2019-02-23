@@ -45,7 +45,9 @@ class Index extends React.Component {
                             {topList && topList.map((item) => {
                                 return (
                                     <li key={item.id} className={style['top-item']} onClick={() => this.goDetail(item.id)}>
-                                        <img src={item.coverImgUrl} alt=""/>
+                                        <div>
+                                            <img src={item.coverImgUrl} alt=""/>
+                                        </div>
                                         <div className={style['top-info']}>
                                             <div className={style.name}>{item.name}</div>
                                             <div>

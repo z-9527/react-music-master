@@ -173,12 +173,12 @@ class Content extends React.Component{
                             <div className={style['info-box']}>
                                 <div style={{display:info.briefDesc?'':'none'}}>
                                     <div className={style.title}>简介</div>
-                                    <div dangerouslySetInnerHTML={createMarkup(info.briefDesc)} style={{marginBottom:20}}/>
+                                    <div className={style.text} dangerouslySetInnerHTML={createMarkup(info.briefDesc)}/>
                                 </div>
                                 {
                                     info.introduction && info.introduction.map(item=><div key={item.ti}>
                                         <div className={style.title}>{item.ti}</div>
-                                        <div dangerouslySetInnerHTML={createMarkup(item.txt)} style={{marginBottom:20}}/>
+                                        <div className={style.text} dangerouslySetInnerHTML={createMarkup(item.txt)}/>
                                     </div>)
                                 }
 
