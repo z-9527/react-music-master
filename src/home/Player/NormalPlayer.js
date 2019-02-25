@@ -49,8 +49,20 @@ class NormalPlayer extends React.Component {
         })
         animations.runAnimation(this.cdWrapper, 'move')
     }
+    togglePlay = () => {
+        this.props.appStore.togglePlay()
+    }
+    setLikes = (isExist) => {
+        this.props.appStore.setLikes({
+            isAdd:!isExist,
+            song:this.props.appStore.currentSong
+        })
+    }
+
     render () {
-        const {currentSong, isFullScreen} = this.props.appStore
+        const {currentSong, isFullScreen, playing, likeSongs} = this.props.appStore
+        const isExist = likeSongs.some(item => item.id === currentSong.id)
+
         return (
             <CSSTransition
                 onEnter={this.onEnter}
@@ -70,8 +82,9 @@ class NormalPlayer extends React.Component {
                     </div>
                     <div className={style.middle}>
                         <div className={style['middle-left']}>
-                            <div className={style['image-wrapper']} ref={el=>this.cdWrapper=el}>
-                                <img src={currentSong.image} alt=""/>
+                            <div className={style['image-wrapper']} ref={el => this.cdWrapper = el}>
+                                <img src={currentSong.image} alt=""
+                                     className={`rotate ${playing ? '' : 'rotate-pause'}`}/>
                             </div>
                         </div>
                     </div>
@@ -80,9 +93,11 @@ class NormalPlayer extends React.Component {
                         <div className={style['control-wrapper']}>
                             <div><span className={'iconfont icon-xunhuanbofang'}/></div>
                             <div><span className={'iconfont icon-shangyishou'}/></div>
-                            <div><span className={'iconfont icon-play_icon'}/></div>
+                            <div><span className={`iconfont ${playing ? 'icon-bofang2' : 'icon-play_icon'}`}
+                                       onClick={this.togglePlay}/></div>
                             <div><span className={'iconfont icon-xiayishou'}/></div>
-                            <div><span className={'iconfont icon-xihuan'}/></div>
+                            <div><span className={`iconfont ${isExist ? 'icon-xihuan1' : 'icon-xihuan'}`} onClick={()=>this.setLikes(isExist)}/>
+                            </div>
                         </div>
                     </div>
                 </div>

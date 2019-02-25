@@ -1,6 +1,6 @@
-import { observable, action, computed,runInAction } from 'mobx'
+import { observable, action, computed, runInAction } from 'mobx'
 import { get } from '@/utils/ajax'
-import {Toast} from 'antd-mobile'
+import { Toast } from 'antd-mobile'
 
 const mode = {
     sequence: 0, //顺序播放
@@ -15,6 +15,7 @@ class AppStore {
     @observable mode   //播放模式
     @observable currentIndex   //当前播放歌曲索引
     @observable isFullScreen   //是否全屏播放音乐
+    @observable likeSongs   //喜欢的音乐列表
 
     constructor () {
         this.isExpandSider = false
@@ -23,6 +24,7 @@ class AppStore {
         this.mode = mode.sequence
         this.currentIndex = -1
         this.isFullScreen = false
+        this.likeSongs = JSON.parse(localStorage.getItem('likeSongs')) || []
     }
 
     /**
@@ -32,8 +34,8 @@ class AppStore {
     @computed
     get currentSong () {
         let song = this.playlist[this.currentIndex] || {}
-        if(song.name){
-            song.artists = song.ar.map(item=>item.name).join('/')
+        if (song.name) {
+            song.artists = song.ar.map(item => item.name).join('/')
             song.image = song.al ? song.al.picUrl : ''
         }
         return song
@@ -65,6 +67,32 @@ class AppStore {
         this.playlist = songlist || []
         this.currentIndex = index
         this.isFullScreen = true
+        this.playing = true
+    }
+    /**
+     * 暂停/播放音乐
+     */
+    @action
+    togglePlay = () => {
+        this.playing = !this.playing
+    }
+    /**
+     * 设置喜欢的音乐
+     * @param isAdd   是否是添加音乐
+     * @param song    喜欢的音乐
+     * @param index   索引
+     */
+    @action
+    setLikes = ({isAdd, song, index}) => {
+        let likeSongs = this.likeSongs.slice()
+        if (isAdd) {
+            likeSongs.unshift(song)
+        } else {
+            index = index || likeSongs.findIndex(item => item.id === song.id)
+            likeSongs.splice(index,1)
+        }
+        localStorage.setItem('likeSongs',JSON.stringify(likeSongs))
+        this.likeSongs = JSON.parse(localStorage.getItem('likeSongs')) || []
     }
 
 }
