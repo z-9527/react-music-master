@@ -11,7 +11,6 @@ class MiniPlayer extends React.Component {
 
     render () {
         const {currentSong} = this.props.appStore
-        console.log(123, {...currentSong})
         return (
             <div className={style['mini-player']} onClick={this.open}>
                 <div className={style.icon}>

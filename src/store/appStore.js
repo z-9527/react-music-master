@@ -61,17 +61,10 @@ class AppStore {
      */
     @action
     onSelectSong = async (obj) => {
-        const {songlist, song, index} = obj
-        const res = await get(`/check/music?id=${song.id}`)
-        if(!res.success){
-            Toast.offline('此歌曲暂无版权')
-            return
-        }
-        runInAction(()=>{
-            this.playlist = songlist || []
-            this.currentIndex = index
-            this.isFullScreen = true
-        })
+        const {songlist, index} = obj
+        this.playlist = songlist || []
+        this.currentIndex = index
+        this.isFullScreen = true
     }
 
 }

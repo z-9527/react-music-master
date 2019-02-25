@@ -6,13 +6,11 @@ import NormalPlayer from './NormalPlayer'
 @inject('appStore') @observer
 class Player extends React.Component {
     render () {
-        const {isFullScreen, playlist} = this.props.appStore
+        const {playlist} = this.props.appStore
         return (
             <div style={{display: playlist.length > 0 ? '' : 'none'}}>
-                {
-                    isFullScreen ? <NormalPlayer/> : <MiniPlayer/>
-                }
-
+                <NormalPlayer/>
+                <MiniPlayer/>
             </div>
         )
     }
