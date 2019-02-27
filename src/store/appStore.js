@@ -122,7 +122,7 @@ class AppStore {
             return
         }
 
-        if (this.mode = mode.shuffle) {
+        if (this.mode === mode.shuffle) {
             currentIndex = getRandom(0, this.playlist.length - 1)
             while (currentIndex === this.currentIndex) {
                 currentIndex = getRandom(0, this.playlist.length - 1)
@@ -169,7 +169,9 @@ class AppStore {
         if (isAdd) {
             likeSongs.unshift(song)
         } else {
-            index = index || likeSongs.findIndex(item => item.id === song.id)
+            if (index === undefined) {
+                index = likeSongs.findIndex(item => item.id === song.id)
+            }
             likeSongs.splice(index, 1)
         }
         localStorage.setItem('likeSongs', JSON.stringify(likeSongs))
@@ -191,10 +193,10 @@ class AppStore {
             }
             playHistorys.unshift(song)
         } else {
-            index = index || playHistorys.findIndex(item => item.id === song.id)
             playHistorys.splice(index, 1)
         }
         localStorage.setItem('playHistorys', JSON.stringify(playHistorys))
+        this.playHistorys = JSON.parse(localStorage.getItem('playHistorys')) || []
     }
 
     /**------------------------------------**/
@@ -225,11 +227,19 @@ class AppStore {
      */
     @action
     onEnded = () => {
-        if(this.mode = mode.loop){
+        if (this.mode === mode.loop) {
 
         } else {
             this.changeSong('next')
         }
+    }
+    /**
+     * 播放时间更新时的处理
+     * @param e
+     */
+    @action
+    onTimeUpdate = (e) => {
+        // console.log(666,e.target.currentTime)
     }
 
 }

@@ -10,14 +10,18 @@ class Player extends React.Component {
             audio: this.audio
         })
     }
-    onCanPlay = ()=>{
+
+    onCanPlay = () => {
         this.props.appStore.onCanPlay()
     }
-    onError = ()=>{
+    onError = () => {
         this.props.appStore.onError()
     }
-    onEnded = ()=>{
+    onEnded = () => {
         this.props.appStore.onEnded()
+    }
+    onTimeUpdate = (e) => {
+        this.props.appStore.onTimeUpdate(e)
     }
 
     render () {
@@ -30,6 +34,7 @@ class Player extends React.Component {
                     onCanPlay={this.onCanPlay}
                     onError={this.onError}
                     onEnded={this.onEnded}
+                    onTimeUpdate={this.onTimeUpdate}
                     src={currentSong.url}
                     ref={audio => this.audio = audio}/>
             </div>

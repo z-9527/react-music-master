@@ -15,6 +15,7 @@ const AlbumPage = asyncComponent(()=>import('../../pages/AlbumPage/index'))     
 const PlayListsPage = asyncComponent(()=>import('../../pages/PlayListsPage/index'))             //歌单页面
 const ArtistsPage = asyncComponent(()=>import('../../pages/ArtistsPage/index'))             //歌手列表页面
 const MVPage = asyncComponent(()=>import('../../pages/MVPage/index'))             //MV页面
+const HistoryPage = asyncComponent(()=>import('../../pages/HistoryPage/index'))             //播放历史和喜欢歌曲页面
 
 @inject('appStore') @withRouter @observer
 class Main extends React.Component {
@@ -47,6 +48,7 @@ class Main extends React.Component {
                         <Route path={`/playlists`} component={PlayListsPage}/>
                         <Route path={`/artists`} component={ArtistsPage}/>
                         <Route path={`/mv/:id`} component={MVPage}/>
+                        <Route path={`/history`} component={HistoryPage}/>
 
                         <Redirect exact from={'/'} to={'/find'}/>
                     </Switch>
