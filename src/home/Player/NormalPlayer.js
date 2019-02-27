@@ -54,14 +54,24 @@ class NormalPlayer extends React.Component {
     }
     setLikes = (isExist) => {
         this.props.appStore.setLikes({
-            isAdd:!isExist,
-            song:this.props.appStore.currentSong
+            isAdd: !isExist,
+            song: this.props.appStore.currentSong
         })
+    }
+    changeMode = () => {
+        this.props.appStore.changeMode()
+    }
+    prev = ()=>{
+        this.props.appStore.changeSong('prev')
+    }
+    next = ()=>{
+        this.props.appStore.changeSong('next')
     }
 
     render () {
-        const {currentSong, isFullScreen, playing, likeSongs} = this.props.appStore
+        const {currentSong, isFullScreen, playing, likeSongs, mode} = this.props.appStore
         const isExist = likeSongs.some(item => item.id === currentSong.id)
+        const icons = ['icon-xunhuanbofang', 'icon-suijibofang', 'icon-danquxunhuan']
 
         return (
             <CSSTransition
@@ -91,12 +101,13 @@ class NormalPlayer extends React.Component {
                     <div className={`${style.bottom} bottom`}>
                         <div className={style['progress-wrapper']}></div>
                         <div className={style['control-wrapper']}>
-                            <div><span className={'iconfont icon-xunhuanbofang'}/></div>
-                            <div><span className={'iconfont icon-shangyishou'}/></div>
+                            <div><span className={`iconfont ${icons[mode]}`} onClick={this.changeMode}/></div>
+                            <div><span className={'iconfont icon-shangyishou'} onClick={this.prev}/></div>
                             <div><span className={`iconfont ${playing ? 'icon-bofang2' : 'icon-play_icon'}`}
                                        onClick={this.togglePlay}/></div>
-                            <div><span className={'iconfont icon-xiayishou'}/></div>
-                            <div><span className={`iconfont ${isExist ? 'icon-xihuan1' : 'icon-xihuan'}`} onClick={()=>this.setLikes(isExist)}/>
+                            <div><span className={'iconfont icon-xiayishou'} onClick={this.next}/></div>
+                            <div><span className={`iconfont ${isExist ? 'icon-xihuan1' : 'icon-xihuan'}`}
+                                       onClick={() => this.setLikes(isExist)}/>
                             </div>
                         </div>
                     </div>
