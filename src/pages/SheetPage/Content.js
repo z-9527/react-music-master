@@ -6,8 +6,10 @@ import SongList from '@/components/SongList'
 import PropTypes from 'prop-types'
 import {createMarkup} from '@/utils/util'
 import Loading from '@/components/Loading'
+import {inject,observer} from 'mobx-react'
 
 
+@inject('appStore') @observer
 class Content extends React.Component{
     static propTypes = {
         info: PropTypes.object,
@@ -59,24 +61,30 @@ class Content extends React.Component{
         const size = this.state.songs.length
         this.getSongs(size)
     }
+    onSelectSong = (obj)=>{
+        this.props.appStore.onSelectSong(obj)
+    }
 
     render(){
         const {info} = this.props
         const {songs,loading} = this.state
+        const {currentSong,playlist} = this.props.appStore
 
         const tabs = [
             { title:'歌曲'},
             { title:'详情'}
         ]
+        const h = playlist.length ? 60 : 0
+        const height = {height:`calc(100vh - ${ 300 + h}px`}
 
         return (
            <div>
                <Tabs tabs={tabs} swipeable={false}>
-                   <div style={{height:'calc(100vh - 300px)'}}>
-                       <SongList list={songs} loading={loading} loadingMore={this.loadingMore}/>
+                   <div style={height}>
+                       <SongList list={songs} loading={loading} loadingMore={this.loadingMore} onSelectSong={this.onSelectSong} currentSong={currentSong}/>
                        <Loading loading={this.props.loading}/>
                    </div>
-                   <div style={{height:'calc(100vh - 300px)'}}>
+                   <div style={height}>
                        <Scroll>
                            <div className={style.description} dangerouslySetInnerHTML={createMarkup(info.description)}/>
                        </Scroll>

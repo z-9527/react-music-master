@@ -1,4 +1,5 @@
 @import "../../../assets/style/default";
+@import "../../../assets/style/common";
 
 .list {
   li {
@@ -7,25 +8,32 @@
     margin: 20px 30px 20px 20px;
     line-height: 1.5;
 
-    h3 {
-      font-size: 15px;
-      color: @color-text-paragraph;
-      font-weight: bold;
+    div{
+      overflow: hidden;
+      h3 {
+        .ellipsis();
+        font-size: 15px;
+        color: @color-text-paragraph;
+        font-weight: bold;
+      }
+      p {
+        .ellipsis();
+        color: #777;
+      }
+      .icon {
+        color: #999;
+        font-size: 18px;
+      }
     }
-    p {
-      color: #777;
+    div:last-child{
+      width: 12px;
+      margin-left: 10px;
     }
 
-    &.active {
+    &.active  div{
       h3, .icon, p {
         color: @base-color;
       }
     }
-
-    .icon {
-      color: #999;
-      font-size: 18px;
-    }
-
   }
 }

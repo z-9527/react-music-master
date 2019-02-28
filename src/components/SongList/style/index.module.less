@@ -1,4 +1,5 @@
 @import "../../../assets/style/common";
+@import "../../../assets/style/default";
 
 .song-list-box{
   height: 100%;
@@ -10,6 +11,19 @@
       align-items: center;
       padding: 20px;
       color: #777;
+
+      &.active{
+        color: @base-color;
+        .num{
+          color: @base-color;
+          font-weight: bold;
+        }
+        .text{
+          h3{
+            color: @base-color;
+          }
+        }
+      }
 
       .num{
         font-size: 16px;

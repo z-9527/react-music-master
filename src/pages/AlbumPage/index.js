@@ -9,8 +9,10 @@ import Loading from '../../components/Loading/index'
 import SongList from '@/components/SongList'
 import Scroll from '@/components/Scroll'
 import {createMarkup} from '@/utils/util'
+import {inject,observer} from 'mobx-react'
 
-@withRouter
+
+@withRouter @inject('appStore') @observer
 class AlbumPage extends React.Component{
     state = {
         info:{},   //专辑信息
@@ -45,14 +47,21 @@ class AlbumPage extends React.Component{
             loading:false
         })
     }
+    onSelectSong = (obj)=>{
+        this.props.appStore.onSelectSong(obj)
+    }
+
     render(){
         const {info,songs,loading} = this.state
+        const {currentSong,playlist} = this.props.appStore
+
         const tabs = [
             {title:'歌曲'},
             {title:'专辑简介'},
         ]
 
-        const height = {height:'calc(100vh - 300px)'}
+        const h = playlist.length ? 60 : 0
+        const height = {height:`calc(100vh - ${ 300 + h}px`}
 
         return (
             <div className={style.container}>
@@ -61,7 +70,7 @@ class AlbumPage extends React.Component{
                 <div>
                     <Tabs tabs={tabs} swipeable={false}>
                         <div style={height}>
-                            <SongList list={songs}/>
+                            <SongList list={songs} onSelectSong={this.onSelectSong} currentSong={currentSong}/>
                             <Loading loading={loading}/>
                         </div>
                         <div style={height}>

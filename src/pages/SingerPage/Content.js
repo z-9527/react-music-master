@@ -117,20 +117,22 @@ class Content extends React.Component{
 
     render(){
         const {songs,songsLoading,albums,albumsLoading,mvs,mvsLoading,info,infoLoading} = this.state
+        const {currentSong,playlist} = this.props.appStore
         const tabs = [
             {title:'单曲'},
             {title:'专辑'},
             {title:'MV'},
             {title:'简介'},
         ]
-        const height = {height:'calc(100vh - 88px)'}
+        const h = playlist.length ? 60 : 0
+        const height = {height:`calc(100vh - ${ 88 + h}px`}
         return (
             <div className={style.wrapper}>
                 <Tabs tabs={tabs} swipeable={false} onChange={this.handleChange} initialPage={0}>
                     {/*单曲*/}
                     <div className={style['tab-item']} style={height}>
-                        <SongList list={songs} onSelectSong={this.onSelectSong}/>
-                        <Loading loading={songsLoading} style={{position:'absolute',top:'30%'}}/>
+                        <SongList list={songs} onSelectSong={this.onSelectSong} currentSong={currentSong}/>
+                        <Loading loading={songsLoading} style={{position:'absolute',top:'40%'}}/>
                     </div>
                     {/*专辑*/}
                     <div className={style['tab-item']} style={height}>
@@ -149,7 +151,7 @@ class Content extends React.Component{
                                 }
                             </ul>
                         </Scroll>
-                        <Loading loading={albumsLoading} style={{position:'absolute',top:'30%'}}/>
+                        <Loading loading={albumsLoading} style={{position:'absolute',top:'40%'}}/>
                     </div>
                     {/*MV*/}
                     <div className={style['tab-item']} style={height}>
@@ -169,7 +171,7 @@ class Content extends React.Component{
                                 }
                             </ul>
                         </Scroll>
-                        <Loading loading={mvsLoading} style={{position:'absolute',top:'30%'}}/>
+                        <Loading loading={mvsLoading} style={{position:'absolute',top:'40%'}}/>
                     </div>
                     {/*简介*/}
                     <div className={style['tab-item']} style={height}>
@@ -188,7 +190,7 @@ class Content extends React.Component{
 
                             </div>
                         </Scroll>
-                        <Loading loading={infoLoading} style={{position:'absolute',top:'30%'}}/>
+                        <Loading loading={infoLoading} style={{position:'absolute',top:'40%'}}/>
                     </div>
                 </Tabs>
             </div>
