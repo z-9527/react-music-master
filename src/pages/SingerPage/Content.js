@@ -132,7 +132,7 @@ class Content extends React.Component{
                     {/*单曲*/}
                     <div className={style['tab-item']} style={height}>
                         <SongList list={songs} onSelectSong={this.onSelectSong} currentSong={currentSong}/>
-                        <Loading loading={songsLoading} style={{position:'absolute',top:'40%'}}/>
+                        <Loading loading={songsLoading} style={{position:'absolute',top:'30%'}}/>
                     </div>
                     {/*专辑*/}
                     <div className={style['tab-item']} style={height}>
@@ -151,7 +151,7 @@ class Content extends React.Component{
                                 }
                             </ul>
                         </Scroll>
-                        <Loading loading={albumsLoading} style={{position:'absolute',top:'40%'}}/>
+                        <Loading loading={albumsLoading} style={{position:'absolute',top:'30%'}}/>
                     </div>
                     {/*MV*/}
                     <div className={style['tab-item']} style={height}>
@@ -171,7 +171,7 @@ class Content extends React.Component{
                                 }
                             </ul>
                         </Scroll>
-                        <Loading loading={mvsLoading} style={{position:'absolute',top:'40%'}}/>
+                        <Loading loading={mvsLoading} style={{position:'absolute',top:'30%'}}/>
                     </div>
                     {/*简介*/}
                     <div className={style['tab-item']} style={height}>
@@ -190,7 +190,7 @@ class Content extends React.Component{
 
                             </div>
                         </Scroll>
-                        <Loading loading={infoLoading} style={{position:'absolute',top:'40%'}}/>
+                        <Loading loading={infoLoading} style={{position:'absolute',top:'30%'}}/>
                     </div>
                 </Tabs>
             </div>

@@ -4,6 +4,8 @@ import { inject, observer } from 'mobx-react'
 import { CSSTransition } from 'react-transition-group'
 import './style/animate.less'
 import animations from 'create-keyframe-animation'
+import ProgressBar from '@/components/ProgressBar'
+import { formatTime } from '@/utils/util'
 
 @inject('appStore') @observer
 class NormalPlayer extends React.Component {
@@ -61,15 +63,18 @@ class NormalPlayer extends React.Component {
     changeMode = () => {
         this.props.appStore.changeMode()
     }
-    prev = ()=>{
+    prev = () => {
         this.props.appStore.changeSong('prev')
     }
-    next = ()=>{
+    next = () => {
         this.props.appStore.changeSong('next')
+    }
+    onPercentChange = (percent) => {
+        console.log(percent)
     }
 
     render () {
-        const {currentSong, isFullScreen, playing, likeSongs, mode} = this.props.appStore
+        const {currentSong, isFullScreen, playing, likeSongs, mode, percent,currentTime} = this.props.appStore
         const isExist = likeSongs.some(item => item.id === currentSong.id)
         const icons = ['icon-xunhuanbofang', 'icon-suijibofang', 'icon-danquxunhuan']
 
@@ -99,7 +104,13 @@ class NormalPlayer extends React.Component {
                         </div>
                     </div>
                     <div className={`${style.bottom} bottom`}>
-                        <div className={style['progress-wrapper']}></div>
+                        <div className={style['progress-wrapper']}>
+                            <div className={style.time}>{formatTime(currentTime)}</div>
+                            <div className={style['bar-wrapper']}>
+                                <ProgressBar percent={percent} percentChange={this.onPercentChange}/>
+                            </div>
+                            <div className={style.time}>{formatTime(currentSong.duration / 1000)}</div>
+                        </div>
                         <div className={style['control-wrapper']}>
                             <div><span className={`iconfont ${icons[mode]}`} onClick={this.changeMode}/></div>
                             <div><span className={'iconfont icon-shangyishou'} onClick={this.prev}/></div>

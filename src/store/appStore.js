@@ -20,6 +20,7 @@ class AppStore {
     @observable playHistorys   //播放历史
     @observable audio   //audio
     @observable songReady   //歌曲是否已经准备好了播放
+    @observable currentTime   //歌曲播放的时间
 
     constructor () {
         this.isExpandSider = false
@@ -32,6 +33,7 @@ class AppStore {
         this.playHistorys = JSON.parse(localStorage.getItem('playHistorys')) || []
         this.audio = null
         this.songReady = false
+        this.currentTime = 0
 
         //当currentSong变化时作出反应
         reaction(() => this.currentSong, () => {
@@ -53,6 +55,15 @@ class AppStore {
             song.duration = song.dt || song.duration || 0
         }
         return song
+    }
+
+    /**
+     * 获取播放时间的百分比
+     * @returns {number}
+     */
+    @computed
+    get percent () {
+        return this.currentTime / this.currentSong.duration
     }
 
     @action
@@ -239,7 +250,7 @@ class AppStore {
      */
     @action
     onTimeUpdate = (e) => {
-        // console.log(666,e.target.currentTime)
+        this.currentTime = e.target.currentTime
     }
 
 }

@@ -34,3 +34,30 @@ export function createMarkup (description) {
 export function getRandom (min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
+
+/**
+ * 对时间秒格式化，将 128 -> 2:08
+ * @param interval
+ * @returns {string}
+ */
+export function formatTime (interval) {
+    interval = interval | 0
+    const minute = interval / 60 | 0
+    const second = pad(interval % 60)
+    return `${minute}:${second}`
+}
+
+/**
+ * 将数字前面填充0
+ * @param num
+ * @param n  填充多少个0，默认填充两个
+ * @returns {*}
+ */
+export function pad (num, n = 2) {
+    let len = num.toString().length
+    while (len < n) {
+        num = '0' + num
+        len++
+    }
+    return num
+}
