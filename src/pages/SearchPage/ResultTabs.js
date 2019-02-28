@@ -7,8 +7,9 @@ import {formatNumber} from '@/utils/util'
 import dayjs from 'dayjs'
 import Scroll from '@/components/Scroll'
 import {withRouter} from 'react-router-dom'
+import {inject,observer} from 'mobx-react'
 
-@withRouter
+@withRouter @inject('appStore') @observer
 class ResultTabs extends React.Component{
     state = {
         page:0,  //当前Tab索引
@@ -89,6 +90,10 @@ class ResultTabs extends React.Component{
 
     render(){
         const {page,searchLoading,songs,albums,artists,playlists} = this.state
+        const {playlist} = this.props.appStore
+
+        const h = playlist.length ? 60 : 0
+        const height = {height:`calc(100vh - ${ 180 + h}px`}
 
         const tabs = [
             {title:'单曲',type:1},
@@ -106,7 +111,7 @@ class ResultTabs extends React.Component{
             <div>
                 <Tabs tabs={tabs} onTabClick={this.handleTabClick} page={page} swipeable={false} animated={false}>
                     {/*单曲*/}
-                    <div className={`${style['tab-item']} ${style.songs}`}>
+                    <div className={`${style['tab-item']} ${style.songs}`} style={height}>
                         <Scroll>
                             <ul>
                                 {songs && songs.map(item=><li key={item.id}>
@@ -132,7 +137,7 @@ class ResultTabs extends React.Component{
                         </Scroll>
                     </div>
                     {/*专辑*/}
-                    <div className={`${style['tab-item']} ${style.albums}`}>
+                    <div className={`${style['tab-item']} ${style.albums}`} style={height}>
                         <Scroll>
                             <ul>
                                 {albums && albums.map(item=><li key={item.id} onClick={()=>this.goTo('album',item.id)}>
@@ -161,7 +166,7 @@ class ResultTabs extends React.Component{
                         </Scroll>
                     </div>
                     {/*歌手*/}
-                    <div className={`${style['tab-item']} ${style.artists}`}>
+                    <div className={`${style['tab-item']} ${style.artists}`} style={height}>
                         <Scroll>
                             <ul>
                                 {artists && artists.map(item=><li key={item.id} onClick={()=>this.goTo('singer',item.id)}>
@@ -182,7 +187,7 @@ class ResultTabs extends React.Component{
                         </Scroll>
                     </div>
                     {/*歌单*/}
-                    <div className={`${style['tab-item']} ${style.playlists}`}>
+                    <div className={`${style['tab-item']} ${style.playlists}`} style={height}>
                         <Scroll>
                             <ul>
                                 {playlists && playlists.map(item=><li key={item.id} onClick={()=>this.goTo('sheet',item.id)}>

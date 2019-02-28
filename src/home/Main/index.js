@@ -24,7 +24,7 @@ class Main extends React.Component {
     }
 
     render () {
-        const {isExpandSider} = this.props.appStore
+        const {isExpandSider,playlist} = this.props.appStore
         return (
             <div className={style.container} style={{transform: `translateX(${isExpandSider ? '80%' : 0})`}}>
                 <div className={style.header}>
@@ -36,7 +36,7 @@ class Main extends React.Component {
                     <li><NavLink to={'/toplist'} activeClassName={style.active}>排行榜</NavLink></li>
                     <li><NavLink to={'/search'} activeClassName={style.active}>搜索</NavLink></li>
                 </ul>
-                <div className={style.content}>
+                <div className={style.content} style={{bottom:playlist.length ? 60 : 0}}>
                     <Switch>
                         <Route path={'/my'} component={MyPage}/>
                         <Route path={'/find'} component={FindPage}/>

@@ -4,8 +4,9 @@ import {get} from '@/utils/ajax'
 import {withRouter,Link} from 'react-router-dom'
 import Scroll from '../../components/Scroll/index'
 import Loading from '@/components/Loading'
+import {inject,observer} from 'mobx-react'
 
-@withRouter
+@withRouter @inject('appStore') @observer
 class ArtistsPage extends React.Component{
     state = {
         artists:[],
@@ -57,13 +58,18 @@ class ArtistsPage extends React.Component{
 
     render(){
         const {artists,loading,isLoadMore,haveMore} = this.state
+        const {playlist} = this.props.appStore
+
+        const h = playlist.length ? 60 : 0
+        const height = {height:`calc(100vh - ${ 44 + h}px`}
+
         return (
             <div className={style.container}>
                 <div className={style.navbar}>
                     <div className={`iconfont icon-zuojiantou ${style.iconfont}`} onClick={this.goBack}/>
                     <div className={style.title}>热门歌手</div>
                 </div>
-                <div style={{height:'calc(100vh - 44px)'}}>
+                <div style={height}>
                     <Scroll onPullingUp={this.onLoadMore} ref={el=>this.scroll=el}>
                         <div>
                             <ul>

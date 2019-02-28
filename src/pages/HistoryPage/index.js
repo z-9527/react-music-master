@@ -17,7 +17,8 @@ class HistoryPage extends React.Component {
             tab: isHistory ? 'history' : 'like'
         })
     }
-    goBack = ()=>{
+
+    goBack = () => {
         this.props.history.goBack()
     }
 
@@ -27,18 +28,19 @@ class HistoryPage extends React.Component {
             index
         })
     }
-    removeHistory = (index)=>{
+    removeHistory = (index) => {
         this.props.appStore.setPlayHistorys({
-            isAdd:false,
+            isAdd: false,
             index
         })
     }
 
     render () {
         const {tab} = this.state
-        const {likeSongs, playHistorys} = this.props.appStore
+        const {likeSongs, playHistorys, playlist} = this.props.appStore
         const isHistory = tab === 'history'
-        const height = {height:'calc(100vh - 45px)'}
+        const h = playlist.length ? 60 : 0
+        const height = {height: `calc(100vh - ${ 44 + h}px`}
 
         return (
             <div className={style.container}>
