@@ -9,14 +9,22 @@ class PlayList extends React.Component {
     changeMode = () => {
         this.props.appStore.changeMode()
     }
+    close = ()=>{
+        this.props.appStore.setStore({
+            isShowPlaylist:false
+        })
+    }
+    stop = (e)=>{
+        e.stopPropagation()
+    }
 
     render () {
-        const {mode, playlist, currentSong} = this.props.appStore
+        const {mode, playlist, currentSong, isShowPlaylist} = this.props.appStore
         const icons = ['icon-xunhuanbofang', 'icon-suijibofang', 'icon-danquxunhuan']
         const texts = ['顺序播放', '随机播放', '单曲循环']
         return (
-            <div className={style.wrapper}>
-                <div className={style['list-wrapper']}>
+            <div className={style.wrapper} style={{display: isShowPlaylist ? '' : 'none'}} onClick={this.close}>
+                <div className={style['list-wrapper']} onClick={this.stop}>
                     <div className={style['list-top']}>
                         <div onClick={this.changeMode}>
                             <span className={`iconfont ${icons[mode]} ${style.icon}`}/>
@@ -40,7 +48,7 @@ class PlayList extends React.Component {
                             </ul>
                         </Scroll>
                     </div>
-                    <div className={style['list-bottom']}>关闭</div>
+                    <div className={style['list-bottom']} onClick={this.close}>关闭</div>
                 </div>
             </div>
         )

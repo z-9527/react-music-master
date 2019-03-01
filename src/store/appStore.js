@@ -21,6 +21,7 @@ class AppStore {
     @observable audio   //audio
     @observable songReady   //歌曲是否已经准备好了播放
     @observable currentTime   //歌曲播放的时间
+    @observable isShowPlaylist   //是否显示播放列表
 
     constructor () {
         this.isExpandSider = false
@@ -34,6 +35,7 @@ class AppStore {
         this.audio = null
         this.songReady = false
         this.currentTime = 0
+        this.isShowPlaylist = false
 
         //当currentSong变化时作出反应
         reaction(() => this.currentSong, () => {
