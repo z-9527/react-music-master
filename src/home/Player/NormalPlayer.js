@@ -70,7 +70,7 @@ class NormalPlayer extends React.Component {
         this.props.appStore.changeSong('next')
     }
     onPercentChange = (percent) => {
-        console.log(percent)
+        this.props.appStore.onPercentChange(percent)
     }
 
     render () {
@@ -109,7 +109,7 @@ class NormalPlayer extends React.Component {
                             <div className={style['bar-wrapper']}>
                                 <ProgressBar percent={percent} percentChange={this.onPercentChange}/>
                             </div>
-                            <div className={style.time}>{formatTime(currentSong.duration / 1000)}</div>
+                            <div className={style.time}>{formatTime(currentSong.duration)}</div>
                         </div>
                         <div className={style['control-wrapper']}>
                             <div><span className={`iconfont ${icons[mode]}`} onClick={this.changeMode}/></div>

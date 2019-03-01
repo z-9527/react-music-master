@@ -52,7 +52,7 @@ class AppStore {
             song.artists = song.ar.map(item => item.name).join('/')
             song.image = song.al ? song.al.picUrl : ''
             song.url = `https://music.163.com/song/media/outer/url?id=${song.id}.mp3`
-            song.duration = song.dt || song.duration || 0
+            song.duration = (song.dt / 1000) || (song.duration) / 1000 || 0
         }
         return song
     }
@@ -63,7 +63,11 @@ class AppStore {
      */
     @computed
     get percent () {
-        return this.currentTime / this.currentSong.duration
+        if (this.currentSong.duration) {
+            return this.currentTime / this.currentSong.duration
+        } else {
+            return 0
+        }
     }
 
     @action
@@ -239,7 +243,8 @@ class AppStore {
     @action
     onEnded = () => {
         if (this.mode === mode.loop) {
-
+            this.audio.currentTime = 0
+            this.audio.play()
         } else {
             this.changeSong('next')
         }
@@ -251,6 +256,14 @@ class AppStore {
     @action
     onTimeUpdate = (e) => {
         this.currentTime = e.target.currentTime
+    }
+    /**
+     * 当播放百分比变化的处理
+     * @param percent
+     */
+    onPercentChange = (percent) => {
+        const currentTime = percent * this.currentSong.duration
+        this.audio.currentTime = currentTime
     }
 
 }
