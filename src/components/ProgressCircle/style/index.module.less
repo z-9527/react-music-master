@@ -1,0 +1,20 @@
+@import "../../../assets/style/default";
+
+.progress-circle{
+  position: relative;
+
+  circle{
+    stroke-width: 8px;
+    transform-origin: center;
+
+    &.progress-background{
+      transform: scale(0.9);
+      stroke: @base-color;
+      opacity: .4;
+    }
+    &.progress-bar{
+      transform: scale(0.9) rotate(-90deg);
+      stroke: @base-color;
+    }
+  }
+}
