@@ -2,6 +2,7 @@ import React from 'react'
 import { observer, inject } from 'mobx-react'
 import MiniPlayer from './MiniPlayer'
 import NormalPlayer from './NormalPlayer'
+import PlayList from './PlayList'
 
 @inject('appStore') @observer
 class Player extends React.Component {
@@ -30,6 +31,7 @@ class Player extends React.Component {
             <div style={{display: playlist.length > 0 ? '' : 'none'}}>
                 <NormalPlayer/>
                 <MiniPlayer/>
+                <PlayList/>
                 <audio
                     onCanPlay={this.onCanPlay}
                     onError={this.onError}

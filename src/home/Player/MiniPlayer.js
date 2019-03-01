@@ -14,7 +14,9 @@ class MiniPlayer extends React.Component {
         e.stopPropagation()
         this.props.appStore.togglePlay()
     }
-
+    showPlaylist = (e)=>{
+        e.stopPropagation()
+    }
     render () {
         const {currentSong, playing, percent} = this.props.appStore
         return (
@@ -31,8 +33,8 @@ class MiniPlayer extends React.Component {
                         <span className={`iconfont ${style.iconfont} ${playing?'icon-iconstop':'icon-icon--1'}`}/>
                     </ProgressCircle>
                 </div>
-                <div className={style.control}>
-
+                <div className={style.control} onClick={this.showPlaylist}>
+                    <span className={`iconfont icon-liebiao3 ${style.iconfont2}`}/>
                 </div>
             </div>
         )
