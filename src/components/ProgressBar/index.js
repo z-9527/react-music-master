@@ -3,6 +3,7 @@ import style from './style/index.module.less'
 import PropTypes from 'prop-types'
 
 const progressBtnWidth = 16
+let touch = null
 
 class ProgressBar extends React.Component {
     static propTypes = {
@@ -17,11 +18,11 @@ class ProgressBar extends React.Component {
         _percent: 0
     }
 
-    //react新的生命周期
+    //react新的生命周期,但是拿不到this
     static getDerivedStateFromProps (nextProps, prevState) {
         const {percent} = nextProps
         // 当传入的type发生变化的时候，更新state
-        if (percent !== prevState._percent) {
+        if (percent !== prevState._percent && !touch) {
             return {
                 _percent: percent,
             }
@@ -33,10 +34,29 @@ class ProgressBar extends React.Component {
     progressClick = (e) => {
         const rect = this.bar.getBoundingClientRect()
         const offsetWidth = e.pageX - rect.left
-        const percent = offsetWidth / this.bar.clientWidth
-
+        const percent = offsetWidth / (this.bar.clientWidth - progressBtnWidth)
         this.props.percentChange(percent)
-
+    }
+    onTouchStart = (e) => {
+        touch = {
+            startX: e.touches[0].pageX,
+            left: this.progress.clientWidth
+        }
+    }
+    onTouchMove = (e) => {
+        if(!touch){
+            return
+        }
+        const touchMoveX = e.touches[0].pageX - touch.startX
+        const width = this.bar.clientWidth - progressBtnWidth
+        const offsetWidth = Math.min(width, Math.max(0, touch.left + touchMoveX))
+        this.setState({
+            _percent: offsetWidth / width
+        })
+    }
+    onTouchEnd = () => {
+        touch = null
+        this.props.percentChange(this.state._percent)
     }
 
     render () {
@@ -50,9 +70,15 @@ class ProgressBar extends React.Component {
         return (
             <div className={style['progress-bar']} ref={bar => this.bar = bar} onClick={this.progressClick}>
                 <div className={style['bar-inner']}>
-                    <div className={style.progress} style={{width: `${offsetWidth}px`}}>
+                    <div className={style.progress} style={{width: `${offsetWidth}px`}}
+                         ref={progress => this.progress = progress}>
                     </div>
-                    <div className={style['progress-btn-wrapper']} style={{transform: `translateX(${offsetWidth}px)`}}>
+                    <div
+                        onTouchStart={this.onTouchStart}
+                        onTouchMove={this.onTouchMove}
+                        onTouchEnd={this.onTouchEnd}
+                        className={style['progress-btn-wrapper']}
+                        style={{transform: `translateX(${offsetWidth}px)`}}>
                         <div className={style['progress-btn']}/>
                     </div>
                 </div>
