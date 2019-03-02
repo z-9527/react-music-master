@@ -105,7 +105,7 @@ class AppStore {
     @action
     onSelectSong = async (obj) => {
         const {songlist, index} = obj
-        this.playlist = songlist || []
+        this.playlist = songlist ? songlist.slice() : []
         this.currentIndex = index
         this.isFullScreen = true
     }
@@ -115,6 +115,9 @@ class AppStore {
      */
     @action
     currentSongChange = () => {
+        if (!this.currentSong.id) {
+            return
+        }
         this.playing = true
         setTimeout(() => {
             this.audio && this.audio.play()
@@ -123,6 +126,7 @@ class AppStore {
     /**
      * 切换播放模式
      */
+    @action
     changeMode = () => {
         let mode = (this.mode + 1) % 3
         const infos = ['顺序播放', '随机播放', '单曲循环']
@@ -133,6 +137,7 @@ class AppStore {
      * 切歌，实际上就是维护的currentIndex
      * @param direction 上一首（prev） 下一首（next）
      */
+    @action
     changeSong = (direction) => {
         let currentIndex = this.currentIndex
         if (!this.songReady) {
@@ -214,6 +219,21 @@ class AppStore {
         }
         localStorage.setItem('playHistorys', JSON.stringify(playHistorys))
         this.playHistorys = JSON.parse(localStorage.getItem('playHistorys')) || []
+    }
+    /**
+     * 删除播放列表中的歌曲
+     * @param index
+     */
+    @action
+    deleteSong = (index) => {
+        let playlist = this.playlist.slice()
+        let currentIndex = this.currentIndex
+        playlist.splice(index, 1)
+        if (currentIndex > index || currentIndex === playlist.length) {
+            currentIndex--
+        }
+        this.playlist = playlist
+        this.currentIndex = currentIndex
     }
 
     /**------------------------------------**/

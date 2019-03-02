@@ -31,7 +31,7 @@ class Player extends React.Component {
             <div style={{display: playlist.length > 0 ? '' : 'none'}}>
                 <NormalPlayer/>
                 <MiniPlayer/>
-                <PlayList/>
+                <PlayList currentSong={currentSong}/>
                 <audio
                     onCanPlay={this.onCanPlay}
                     onError={this.onError}

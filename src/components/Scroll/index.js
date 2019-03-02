@@ -33,6 +33,9 @@ class Scroll extends React.Component {
     finishPullUp = ()=>{
         this.scroll && this.scroll.finishPullUp()
     }
+    scrollToElement = (el, time, offsetX, offsetY, easing)=>{
+        this.scroll && this.scroll.scrollToElement(el, time, offsetX, offsetY, easing)
+    }
     destroy = ()=>{
         this.scroll.destroy()
         this.scroll = null
