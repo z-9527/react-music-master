@@ -12,9 +12,9 @@ class List extends React.Component {
             index
         })
     }
-    remove = (index,e)=>{
+    remove = (index,item,e)=>{
         e.stopPropagation()
-        this.props.remove(index)
+        this.props.remove(index,item)
     }
     render () {
         const {list} = this.props
@@ -28,7 +28,7 @@ class List extends React.Component {
                                 <h3>{item.name}</h3>
                                 <p>{item.ar.map(i => i.name).join('/')}</p>
                             </div>
-                            <div onClick={(e)=>this.remove(index,e)}>
+                            <div onClick={(e)=>this.remove(index,item,e)}>
                                 <span className={style.icon}>×</span>
                             </div>
                         </li>)

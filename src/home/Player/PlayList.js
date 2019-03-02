@@ -6,13 +6,13 @@ import Scroll from '@/components/Scroll'
 @inject('appStore') @observer
 class PlayList extends React.Component {
 
-    // componentWillReceiveProps生命周期是要淘汰的生命周期，所以少用。prevProps和props的appStore中的currentSong都是一样的，所以手动传进来一个
+    // componentWillReceiveProps生命周期是要淘汰的生命周期，所以少用。prevProps和props的appStore中的属性都是一样的，所以手动传入
     componentDidUpdate (prevProps) {
-        const currentSong = this.props.currentSong
-        const prevCurrentSong = prevProps.currentSong
-        const isShowPlaylist = this.props.appStore.isShowPlaylist
-        if (isShowPlaylist && currentSong.id !== prevCurrentSong.id) {
-            this.scrollCurrent()
+        const {currentSong,isShowPlaylist} = this.props
+        const {currentSong:prevCurrentSong,isShowPlaylist:prevIsShow} = prevProps
+        //当currentSong变化或者刚打开playlist组件时调用
+        if (currentSong.id !== prevCurrentSong.id || isShowPlaylist !== prevIsShow) {
+            this.scrollToCurrent()
         }
     }
 
@@ -27,7 +27,7 @@ class PlayList extends React.Component {
     stop = (e) => {
         e.stopPropagation()
     }
-    scrollCurrent = () => {
+    scrollToCurrent = () => {
         const currentIndex = this.props.appStore.currentIndex
         const currentDom = this[`item${currentIndex}`]
         this.scroll && this.scroll.scrollToElement(currentDom, 300)
@@ -37,13 +37,17 @@ class PlayList extends React.Component {
             currentIndex: index
         })
     }
-    deleteSong = (index,e) => {
+    deleteSong = (index, e) => {
         e.stopPropagation()
         this.props.appStore.deleteSong(index)
     }
+    setLikes = (item,e) => {
+        e.stopPropagation()
+        this.props.appStore.setLikes(item)
+    }
 
     render () {
-        const {mode, playlist, isShowPlaylist} = this.props.appStore
+        const {mode, playlist, isShowPlaylist, likeSongs} = this.props.appStore
         const currentSong = this.props.currentSong
         const icons = ['icon-xunhuanbofang', 'icon-suijibofang', 'icon-danquxunhuan']
         const texts = ['顺序播放', '随机播放', '单曲循环']
@@ -70,8 +74,11 @@ class PlayList extends React.Component {
                                                                                className={item.id === currentSong.id ? style.active : ''}>
                                     <div>{item.name}</div>
                                     <div>
-                                        <span className={'iconfont icon-xihuan'}/>
-                                        <span className={style.remove} onClick={(e) => this.deleteSong(index,e)}>×</span>
+                                        <span
+                                            className={`iconfont ${likeSongs.some(i => i.id === item.id) ? 'icon-xihuan1' : 'icon-xihuan'}`}
+                                            onClick={(e) => this.setLikes(item,e)}/>
+                                        <span className={style.remove}
+                                              onClick={(e) => this.deleteSong(index, e)}>×</span>
                                     </div>
                                 </li>)}
                             </ul>

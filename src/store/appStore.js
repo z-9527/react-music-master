@@ -186,15 +186,13 @@ class AppStore {
      * @param index   索引
      */
     @action
-    setLikes = ({isAdd, song, index}) => {
+    setLikes = (song) => {
         let likeSongs = this.likeSongs.slice()
-        if (isAdd) {
-            likeSongs.unshift(song)
+        const findx = likeSongs.findIndex(item => item.id === song.id)
+        if (findx !== -1) {
+            likeSongs.splice(findx, 1)
         } else {
-            if (index === undefined) {
-                index = likeSongs.findIndex(item => item.id === song.id)
-            }
-            likeSongs.splice(index, 1)
+            likeSongs.unshift(song)
         }
         localStorage.setItem('likeSongs', JSON.stringify(likeSongs))
         this.likeSongs = JSON.parse(localStorage.getItem('likeSongs')) || []

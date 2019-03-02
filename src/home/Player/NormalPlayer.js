@@ -54,11 +54,8 @@ class NormalPlayer extends React.Component {
     togglePlay = () => {
         this.props.appStore.togglePlay()
     }
-    setLikes = (isExist) => {
-        this.props.appStore.setLikes({
-            isAdd: !isExist,
-            song: this.props.appStore.currentSong
-        })
+    setLikes = () => {
+        this.props.appStore.setLikes(this.props.appStore.currentSong)
     }
     changeMode = () => {
         this.props.appStore.changeMode()
@@ -118,7 +115,7 @@ class NormalPlayer extends React.Component {
                                        onClick={this.togglePlay}/></div>
                             <div><span className={'iconfont icon-xiayishou'} onClick={this.next}/></div>
                             <div><span className={`iconfont ${isExist ? 'icon-xihuan1' : 'icon-xihuan'}`}
-                                       onClick={() => this.setLikes(isExist)}/>
+                                       onClick={this.setLikes}/>
                             </div>
                         </div>
                     </div>

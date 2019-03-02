@@ -22,11 +22,8 @@ class HistoryPage extends React.Component {
         this.props.history.goBack()
     }
 
-    removeLike = (index) => {
-        this.props.appStore.setLikes({
-            isAdd: false,
-            index
-        })
+    removeLike = (index,song) => {
+        this.props.appStore.setLikes(song)
     }
     removeHistory = (index) => {
         this.props.appStore.setPlayHistorys({
