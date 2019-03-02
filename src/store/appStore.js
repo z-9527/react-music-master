@@ -49,8 +49,9 @@ class AppStore {
      */
     @computed
     get currentSong () {
-        let song = this.playlist[this.currentIndex] || {}
-        if (song.name) {
+        let song = {}
+        if(this.playlist[this.currentIndex]){
+            song = {...this.playlist[this.currentIndex]}
             song.artists = song.ar.map(item => item.name).join('/')
             song.image = song.al ? song.al.picUrl : ''
             song.url = `https://music.163.com/song/media/outer/url?id=${song.id}.mp3`
@@ -224,11 +225,14 @@ class AppStore {
      */
     @action
     deleteSong = (index) => {
-        let playlist = this.playlist.slice()
+        let playlist = JSON.parse(JSON.stringify(this.playlist))   //必须这种深拷贝才行，否则报错
         let currentIndex = this.currentIndex
         playlist.splice(index, 1)
         if (currentIndex > index || currentIndex === playlist.length) {
             currentIndex--
+        }
+        if (playlist.length === 0) {
+            this.isShowPlaylist = false
         }
         this.playlist = playlist
         this.currentIndex = currentIndex
@@ -239,13 +243,18 @@ class AppStore {
      */
     @action
     addSong = (song) => {
-        const findex = this.playlist.findIndex(item => item.id === song.id)
+        let playlist = JSON.parse(JSON.stringify(this.playlist))   //必须这种深拷贝才行，否则报错
+        let currentIndex = this.currentIndex
+        const findex = playlist.findIndex(item => item.id === song.id)
         if (findex !== -1) {
             this.currentIndex = findex
             return
         }
-        this.playlist.splice(this.currentIndex,0,song)
-        this.currentIndex ++
+        currentIndex++
+        playlist.splice(currentIndex, 0, song)
+        this.playlist = playlist
+        this.currentIndex = currentIndex
+        this.isFullScreen = true
     }
 
     /**------------------------------------**/
@@ -276,7 +285,7 @@ class AppStore {
      */
     @action
     onEnded = () => {
-        if (this.mode === mode.loop) {
+        if (this.mode === mode.loop || this.playlist.length === 1) {
             this.audio.currentTime = 0
             this.audio.play()
         } else {

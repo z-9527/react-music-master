@@ -54,7 +54,8 @@ class PlayList extends React.Component {
             {text:'确定',onPress:()=>{
                 this.props.appStore.setStore({
                     playlist: [],
-                    currentIndex: -1
+                    currentIndex: -1,
+                    isShowPlaylist:false
                 })
             }}
         ])
