@@ -86,6 +86,17 @@ class ResultTabs extends React.Component{
     goTo = (page,id)=>{
         this.props.history.push(`/${page}/${id}`)
     }
+    addSong = (item)=>{
+        //item没有图片说以用本地的
+        let obj = {
+            ...item,
+            ar:item.artists,
+            al:{
+                picUrl:require('./img/music.jpg')
+            }
+        }
+        this.props.appStore.addSong(obj)
+    }
 
 
     render(){
@@ -114,7 +125,7 @@ class ResultTabs extends React.Component{
                     <div className={`${style['tab-item']} ${style.songs}`} style={height}>
                         <Scroll>
                             <ul>
-                                {songs && songs.map(item=><li key={item.id}>
+                                {songs && songs.map(item=><li key={item.id} onClick={()=>this.addSong(item)}>
                                     <div className={style.left}>
                                         <p className={style.title}>{item.name}</p>
                                         <p className={style.info}>

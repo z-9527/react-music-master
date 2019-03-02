@@ -233,6 +233,20 @@ class AppStore {
         this.playlist = playlist
         this.currentIndex = currentIndex
     }
+    /**
+     * 添加歌曲到播放列表中
+     * @param song
+     */
+    @action
+    addSong = (song) => {
+        const findex = this.playlist.findIndex(item => item.id === song.id)
+        if (findex !== -1) {
+            this.currentIndex = findex
+            return
+        }
+        this.playlist.splice(this.currentIndex,0,song)
+        this.currentIndex ++
+    }
 
     /**------------------------------------**/
     /**

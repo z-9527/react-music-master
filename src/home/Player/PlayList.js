@@ -2,14 +2,17 @@ import React from 'react'
 import style from './style/playlist.module.less'
 import { inject, observer } from 'mobx-react'
 import Scroll from '@/components/Scroll'
+import { Modal } from 'antd-mobile'
+
+const alert = Modal.alert
 
 @inject('appStore') @observer
 class PlayList extends React.Component {
 
     // componentWillReceiveProps生命周期是要淘汰的生命周期，所以少用。prevProps和props的appStore中的属性都是一样的，所以手动传入
     componentDidUpdate (prevProps) {
-        const {currentSong,isShowPlaylist} = this.props
-        const {currentSong:prevCurrentSong,isShowPlaylist:prevIsShow} = prevProps
+        const {currentSong, isShowPlaylist} = this.props
+        const {currentSong: prevCurrentSong, isShowPlaylist: prevIsShow} = prevProps
         //当currentSong变化或者刚打开playlist组件时调用
         if (currentSong.id !== prevCurrentSong.id || isShowPlaylist !== prevIsShow) {
             this.scrollToCurrent()
@@ -41,11 +44,21 @@ class PlayList extends React.Component {
         e.stopPropagation()
         this.props.appStore.deleteSong(index)
     }
-    setLikes = (item,e) => {
+    setLikes = (item, e) => {
         e.stopPropagation()
         this.props.appStore.setLikes(item)
     }
-
+    clear = () => {
+        alert('提示', '确定清空播放列表吗?', [
+            {text: '取消',},
+            {text:'确定',onPress:()=>{
+                this.props.appStore.setStore({
+                    playlist: [],
+                    currentIndex: -1
+                })
+            }}
+        ])
+    }
     render () {
         const {mode, playlist, isShowPlaylist, likeSongs} = this.props.appStore
         const currentSong = this.props.currentSong
@@ -61,7 +74,7 @@ class PlayList extends React.Component {
                             <span className={style.text}>{texts[mode]}</span>
                             <span className={style.num}>({playlist.length})</span>
                         </div>
-                        <div>
+                        <div onClick={this.clear}>
                             <span className={`iconfont icon-lvzhou_shanchu_lajitong ${style.icon}`}/>
                         </div>
                     </div>
@@ -76,7 +89,7 @@ class PlayList extends React.Component {
                                     <div>
                                         <span
                                             className={`iconfont ${likeSongs.some(i => i.id === item.id) ? 'icon-xihuan1' : 'icon-xihuan'}`}
-                                            onClick={(e) => this.setLikes(item,e)}/>
+                                            onClick={(e) => this.setLikes(item, e)}/>
                                         <span className={style.remove}
                                               onClick={(e) => this.deleteSong(index, e)}>×</span>
                                     </div>
