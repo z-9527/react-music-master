@@ -71,7 +71,7 @@ class NormalPlayer extends React.Component {
     }
 
     render () {
-        const {currentSong, isFullScreen, playing, likeSongs, mode, percent,currentTime} = this.props.appStore
+        const {currentSong, isFullScreen, playing, likeSongs, mode, percent,currentTime,songReady} = this.props.appStore
         const isExist = likeSongs.some(item => item.id === currentSong.id)
         const icons = ['icon-xunhuanbofang', 'icon-suijibofang', 'icon-danquxunhuan']
 
@@ -108,7 +108,7 @@ class NormalPlayer extends React.Component {
                             </div>
                             <div className={style.time}>{formatTime(currentSong.duration)}</div>
                         </div>
-                        <div className={style['control-wrapper']}>
+                        <div className={`${style['control-wrapper']} ${songReady ? '' : style.disable}`}>
                             <div><span className={`iconfont ${icons[mode]}`} onClick={this.changeMode}/></div>
                             <div><span className={'iconfont icon-shangyishou'} onClick={this.prev}/></div>
                             <div><span className={`iconfont ${playing ? 'icon-bofang2' : 'icon-play_icon'}`}

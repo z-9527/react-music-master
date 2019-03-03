@@ -51,6 +51,7 @@ class AppStore {
     get currentSong () {
         let song = {}
         if(this.playlist[this.currentIndex]){
+            //引用类型的赋值一定要注意，这里必须深拷贝，否则song的改变会改变this.playlist，this.playlist的改变又触发计算属性，最后导致报错
             song = {...this.playlist[this.currentIndex]}
             song.artists = song.ar.map(item => item.name).join('/')
             song.image = song.al ? song.al.picUrl : ''
@@ -225,7 +226,7 @@ class AppStore {
      */
     @action
     deleteSong = (index) => {
-        let playlist = JSON.parse(JSON.stringify(this.playlist))   //必须这种深拷贝才行，否则报错
+        let playlist = this.playlist.slice()
         let currentIndex = this.currentIndex
         playlist.splice(index, 1)
         if (currentIndex > index || currentIndex === playlist.length) {
@@ -243,7 +244,7 @@ class AppStore {
      */
     @action
     addSong = (song) => {
-        let playlist = JSON.parse(JSON.stringify(this.playlist))   //必须这种深拷贝才行，否则报错
+        let playlist = this.playlist.slice()
         let currentIndex = this.currentIndex
         const findex = playlist.findIndex(item => item.id === song.id)
         if (findex !== -1) {
