@@ -1,7 +1,7 @@
-import { observable, action, computed, runInAction, reaction } from 'mobx'
-import { get } from '@/utils/ajax'
-import { Toast } from 'antd-mobile'
-import { getRandom } from '@/utils/util'
+import {observable, action, computed, runInAction, reaction} from 'mobx'
+import {get} from '@/utils/ajax'
+import {Toast} from 'antd-mobile'
+import {getRandom} from '@/utils/util'
 
 const mode = {
     sequence: 0, //顺序播放
@@ -23,7 +23,7 @@ class AppStore {
     @observable currentTime   //歌曲播放的时间
     @observable isShowPlaylist   //是否显示播放列表
 
-    constructor () {
+    constructor() {
         this.isExpandSider = false
         this.playing = false
         this.playlist = []
@@ -47,10 +47,11 @@ class AppStore {
      * 获取当前播放歌曲，并对数据进行处理
      * @returns {*|{}}
      */
-    @computed
-    get currentSong () {
+    // 当playlist，currentIndex变化时，reaction就会触发，所以要对前后的变化进行判断是否是同一首歌
+    @computed({equals: (prevSong, newSong) => prevSong.id === newSong.id})
+    get currentSong() {
         let song = {}
-        if(this.playlist[this.currentIndex]){
+        if (this.playlist[this.currentIndex]) {
             //引用类型的赋值一定要注意，这里必须深拷贝，否则song的改变会改变this.playlist，this.playlist的改变又触发计算属性，最后导致报错
             song = {...this.playlist[this.currentIndex]}
             song.artists = song.ar.map(item => item.name).join('/')
@@ -66,7 +67,7 @@ class AppStore {
      * @returns {number}
      */
     @computed
-    get percent () {
+    get percent() {
         if (this.currentSong.duration) {
             return this.currentTime / this.currentSong.duration
         } else {
@@ -136,6 +137,15 @@ class AppStore {
         this.mode = mode
     }
     /**
+     * 循环播放
+     */
+    @action
+    loop = () => {
+        this.audio.currentTime = 0
+        this.audio.play()
+        this.playing = true
+    }
+    /**
      * 切歌，实际上就是维护的currentIndex
      * @param direction 上一首（prev） 下一首（next）
      */
@@ -143,6 +153,10 @@ class AppStore {
     changeSong = (direction) => {
         let currentIndex = this.currentIndex
         if (!this.songReady) {
+            return
+        }
+        if (this.playlist.length === 1) {
+            this.loop()
             return
         }
 
@@ -286,9 +300,8 @@ class AppStore {
      */
     @action
     onEnded = () => {
-        if (this.mode === mode.loop || this.playlist.length === 1) {
-            this.audio.currentTime = 0
-            this.audio.play()
+        if (this.mode === mode.loop) {
+            this.loop()
         } else {
             this.changeSong('next')
         }
