@@ -134,13 +134,32 @@
     text-align: center;
     transition: all 0.4s cubic-bezier(0.86, 0.18, 0.82, 1.32);
 
+    .dot-wrapper{
+      text-align: center;
+
+      .dot{
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0 4px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: hsla(0,0%,100%,.5);
+
+        &.active{
+          width: 20px;
+          border-radius: 5px;
+          background: hsla(0,0%,100%,.8);
+        }
+      }
+    }
+
     .progress-wrapper{
       display: flex;
       align-items: center;
       width: 80%;
       height: 50px;
       margin: 0 auto;
-      padding: 10px 0;
       color: #fff;
       font-size: 12px;
       font-weight: bold;

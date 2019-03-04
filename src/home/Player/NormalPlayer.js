@@ -10,13 +10,19 @@ import Scroll from '@/components/Scroll'
 
 @inject('appStore') @observer
 class NormalPlayer extends React.Component {
+    state = {
+        currentShow: 'cd',
+    }
+
     componentDidUpdate (prevProps) {
-        if (this.props.playingLineNum !== prevProps.playingLineNum) {
+        if (!this.touch && this.props.playingLineNum !== prevProps.playingLineNum) {
             this.scrollToCurrent()
         }
     }
+
     scrollToCurrent = () => {
-        const {playingLineNum:lineNum} = this.props.appStore
+        clearTimeout(this.timer)
+        const {playingLineNum: lineNum} = this.props.appStore
         if (lineNum > 5) {
             let lineEl = this[`lyricLine${lineNum - 5}`]
             this.lyricList && this.lyricList.scrollToElement(lineEl, 1000)
@@ -85,9 +91,75 @@ class NormalPlayer extends React.Component {
     onPercentChange = (percent) => {
         this.props.appStore.onPercentChange(percent)
     }
+    middleTouchStart = (e) => {
+        const touch = e.touches[0]
+        this.touch = {
+            startX: touch.pageX,
+            startY: touch.pageY,
+        }
+    }
+    middleTouchMove = (e) => {
+        if (!this.touch) {
+            return
+        }
+        const touch = e.touches[0]
+        //计算X、Y方向的移动距离
+        const offsetX = touch.pageX - this.touch.startX
+        const offsetY = touch.pageY - this.touch.startY
+        if (Math.abs(offsetY) > Math.abs(offsetX)) {
+            //如果Y轴方向移动距离大于X轴则return
+            return
+        }
+        const left = this.state.currentShow === 'cd' ? 0 : -window.innerWidth
+        const translateX = Math.min(0, Math.max(-window.innerWidth, left + offsetX))
+        this.touch.percent = Math.abs(translateX / window.innerWidth)
+        const opacity = 1 - this.touch.percent
+        this.animationDom(translateX, opacity, 0)
+
+    }
+    middleTouchEnd = () => {
+        let translateX = 0
+        let opacity = 0
+        if (this.state.currentShow === 'cd') {
+            if (this.touch.percent > 0.1) {
+                translateX = -window.innerWidth
+                opacity = 0
+                this.setState({
+                    currentShow: 'lyric'
+                })
+            } else {
+                translateX = 0
+                opacity = 1
+            }
+        } else {
+            if (this.touch.percent < 0.9) {
+                translateX = 0
+                opacity = 1
+                this.setState({
+                    currentShow: 'cd'
+                })
+            } else {
+                translateX = -window.innerWidth
+                opacity = 0
+            }
+        }
+        this.animationDom(translateX, opacity, 300)
+        this.timer = setTimeout(() => {
+            this.scrollToCurrent()
+        }, 1000)
+        this.touch = null
+
+    }
+    animationDom = (translateX, opacity, duration) => {
+        this.middleR.style.transform = `translateX(${translateX}px)`
+        this.middleR.style.transitionDuration = `${duration}ms`
+        this.middleL.style.opacity = opacity
+        this.middleL.style.transitionDuration = `${duration}ms`
+    }
 
     render () {
         const {currentSong, isFullScreen, playing, likeSongs, mode, percent, currentTime, songReady, playingLyric, lyric, playingLineNum} = this.props.appStore
+        const {currentShow} = this.state
         const isExist = likeSongs.some(item => item.id === currentSong.id)
         const icons = ['icon-xunhuanbofang', 'icon-suijibofang', 'icon-danquxunhuan']
 
@@ -108,8 +180,9 @@ class NormalPlayer extends React.Component {
                         <h2>{currentSong.name}</h2>
                         <h3>{currentSong.artists}</h3>
                     </div>
-                    <div className={style.middle}>
-                        <div className={style['middle-left']}>
+                    <div className={style.middle} onTouchStart={this.middleTouchStart}
+                         onTouchMove={this.middleTouchMove} onTouchEnd={this.middleTouchEnd}>
+                        <div className={style['middle-left']} ref={middleL => this.middleL = middleL}>
                             <div className={style['image-wrapper']} ref={el => this.cdWrapper = el}>
                                 <img src={currentSong.image} alt=""
                                      className={`rotate ${playing ? '' : 'rotate-pause'}`}/>
@@ -118,7 +191,7 @@ class NormalPlayer extends React.Component {
                                 <div className={style['playing-lyric']}>{songReady ? playingLyric : '正在缓冲...'}</div>
                             </div>
                         </div>
-                        <div className={style['middle-right']}>
+                        <div className={style['middle-right']} ref={middleR => this.middleR = middleR}>
                             <div className={style['lyric-wrapper']}>
                                 <Scroll ref={lyricList => this.lyricList = lyricList}>
                                     <ul>
@@ -131,6 +204,10 @@ class NormalPlayer extends React.Component {
                         </div>
                     </div>
                     <div className={`${style.bottom} bottom`}>
+                        <div className={style['dot-wrapper']}>
+                            <span className={`${style.dot} ${currentShow === 'cd' ? style.active : ''}`}/>
+                            <span className={`${style.dot} ${currentShow === 'lyric' ? style.active : ''}`}/>
+                        </div>
                         <div className={style['progress-wrapper']}>
                             <div className={style.time}>{formatTime(currentTime)}</div>
                             <div className={style['bar-wrapper']}>
