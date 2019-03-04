@@ -15,7 +15,9 @@ class NormalPlayer extends React.Component {
     }
 
     componentDidUpdate (prevProps) {
-        if (!this.touch && this.props.playingLineNum !== prevProps.playingLineNum) {
+        const changeLine = this.props.playingLineNum !== prevProps.playingLineNum
+        const changeFull = this.props.isFullScreen !== prevProps.isFullScreen
+        if ((!this.touch && changeLine) || changeFull) {
             this.scrollToCurrent()
         }
     }

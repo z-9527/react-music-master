@@ -26,10 +26,10 @@ class Player extends React.Component {
     }
 
     render () {
-        const {playlist, currentSong, isShowPlaylist ,playingLineNum} = this.props.appStore
+        const {playlist, currentSong, isShowPlaylist ,playingLineNum, isFullScreen} = this.props.appStore
         return (
             <div style={{display: playlist.length > 0 ? '' : 'none'}}>
-                <NormalPlayer playingLineNum={playingLineNum}/>
+                <NormalPlayer playingLineNum={playingLineNum} isFullScreen={isFullScreen}/>
                 <MiniPlayer/>
                 <PlayList currentSong={currentSong} isShowPlaylist={isShowPlaylist}/>
                 <audio
