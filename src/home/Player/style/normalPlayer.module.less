@@ -71,11 +71,12 @@
     position: fixed;
     top: 80px;
     bottom: 170px;
-    width: 100%;
+    display: flex;
+    width: 200%;
     text-align: center;
 
     .middle-left{
-
+      width: 100%;
       .image-wrapper{
         width: 80%;
         margin: 0 auto;
@@ -88,6 +89,42 @@
           box-sizing: border-box;
         }
       }
+
+      .playing-lyric-wrapper{
+        width: 80%;
+        margin: 30px auto 0;
+        overflow: hidden;
+        text-align: center;
+
+        .playing-lyric{
+          height: 20px;
+          line-height: 20px;
+          font-size: 14px;
+          color: #fff;
+        }
+      }
+    }
+    .middle-right{
+      width: 100%;
+      height: 100%;
+
+      .lyric-wrapper{
+        height: 100%;
+        width: 80%;
+        margin: 0 auto;
+        overflow: hidden;
+        text-align: center;
+
+        .text{
+          line-height: 32px;
+          color: rgba(255,255,255,.8);
+          &.current{
+            color: @auxiliary-color;
+            font-weight: bold;
+          }
+        }
+      }
+
     }
   }
   .bottom{

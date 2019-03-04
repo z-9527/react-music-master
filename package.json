@@ -9,6 +9,7 @@
     "better-scroll": "^1.14.1",
     "create-keyframe-animation": "^0.1.0",
     "dayjs": "^1.8.5",
+    "lyric-parser": "^1.0.1",
     "mobx": "^5.9.0",
     "mobx-react": "^5.4.3",
     "react": "^16.7.0",

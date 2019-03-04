@@ -2,6 +2,7 @@ import {observable, action, computed, runInAction, reaction} from 'mobx'
 import {get} from '@/utils/ajax'
 import {Toast} from 'antd-mobile'
 import {getRandom} from '@/utils/util'
+import Lyric from 'lyric-parser'
 
 const mode = {
     sequence: 0, //顺序播放
@@ -22,6 +23,9 @@ class AppStore {
     @observable songReady   //歌曲是否已经准备好了播放
     @observable currentTime   //歌曲播放的时间
     @observable isShowPlaylist   //是否显示播放列表
+    @observable lyric   //歌词
+    @observable playingLyric   //正在播放的歌词
+    @observable playingLineNum   //正在播放的歌词行数
 
     constructor() {
         this.isExpandSider = false
@@ -36,6 +40,9 @@ class AppStore {
         this.songReady = false
         this.currentTime = 0
         this.isShowPlaylist = false
+        this.lyric = null
+        this.playingLyric = ''
+        this.playingLineNum = 0
 
         //当currentSong变化时作出反应
         reaction(() => this.currentSong, () => {
@@ -121,10 +128,39 @@ class AppStore {
         if (!this.currentSong.id) {
             return
         }
+        this.lyric && this.lyric.stop()
         this.playing = true
+        this.currentTime = 0
+        this.playingLineNum = 0
+        this.playingLyric = ''
+        this.lyric = null
         setTimeout(() => {
             this.audio && this.audio.play()
+            this.getLyric(this.currentSong.id)
         })
+    }
+    /**
+     * 获取歌曲歌词
+     * @param id
+     * @returns {Promise.<void>}
+     */
+    @action
+    getLyric = async (id)=>{
+        const res = await get(`/lyric?id=${id}`)
+        runInAction(()=>{
+            this.lyric = res.lrc ? new Lyric(res.lrc.lyric, this.handler) : null
+            this.lyric && this.lyric.play()
+        })
+    }
+    /**
+     * 播放的歌词变化时的处理
+     * @param lineNum  播放的行数
+     * @param txt    当前播放歌词
+     */
+    @action
+    handler = ({lineNum, txt})=>{
+        this.playingLyric = txt
+        this.playingLineNum = lineNum
     }
     /**
      * 切换播放模式
@@ -144,6 +180,7 @@ class AppStore {
         this.audio.currentTime = 0
         this.audio.play()
         this.playing = true
+        this.lyric && this.lyric.seek(0)
     }
     /**
      * 切歌，实际上就是维护的currentIndex
@@ -193,6 +230,7 @@ class AppStore {
         } else {
             this.audio && this.audio.play()
         }
+        this.lyric && this.lyric.togglePlay()
         this.playing = !this.playing
     }
     /**
@@ -321,6 +359,7 @@ class AppStore {
     onPercentChange = (percent) => {
         const currentTime = percent * this.currentSong.duration
         this.audio.currentTime = currentTime
+        this.lyric && this.lyric.seek(currentTime * 1000)
     }
 
 }

@@ -6,9 +6,25 @@ import './style/animate.less'
 import animations from 'create-keyframe-animation'
 import ProgressBar from '@/components/ProgressBar'
 import { formatTime } from '@/utils/util'
+import Scroll from '@/components/Scroll'
 
 @inject('appStore') @observer
 class NormalPlayer extends React.Component {
+    componentDidUpdate (prevProps) {
+        if (this.props.playingLineNum !== prevProps.playingLineNum) {
+            this.scrollToCurrent()
+        }
+    }
+    scrollToCurrent = () => {
+        const {playingLineNum:lineNum} = this.props.appStore
+        if (lineNum > 5) {
+            let lineEl = this[`lyricLine${lineNum - 5}`]
+            this.lyricList && this.lyricList.scrollToElement(lineEl, 1000)
+        } else {
+            this.lyricList && this.lyricList.scrollTo(0, 0, 1000)
+        }
+    }
+
     close = () => {
         this.props.appStore.setFullScreen(false)
     }
@@ -71,7 +87,7 @@ class NormalPlayer extends React.Component {
     }
 
     render () {
-        const {currentSong, isFullScreen, playing, likeSongs, mode, percent,currentTime,songReady} = this.props.appStore
+        const {currentSong, isFullScreen, playing, likeSongs, mode, percent, currentTime, songReady, playingLyric, lyric, playingLineNum} = this.props.appStore
         const isExist = likeSongs.some(item => item.id === currentSong.id)
         const icons = ['icon-xunhuanbofang', 'icon-suijibofang', 'icon-danquxunhuan']
 
@@ -97,6 +113,20 @@ class NormalPlayer extends React.Component {
                             <div className={style['image-wrapper']} ref={el => this.cdWrapper = el}>
                                 <img src={currentSong.image} alt=""
                                      className={`rotate ${playing ? '' : 'rotate-pause'}`}/>
+                            </div>
+                            <div className={style['playing-lyric-wrapper']}>
+                                <div className={style['playing-lyric']}>{songReady ? playingLyric : '正在缓冲...'}</div>
+                            </div>
+                        </div>
+                        <div className={style['middle-right']}>
+                            <div className={style['lyric-wrapper']}>
+                                <Scroll ref={lyricList => this.lyricList = lyricList}>
+                                    <ul>
+                                        {lyric && lyric.lines.map((item, index) => <li key={index}
+                                                                                       ref={lyricLine => this[`lyricLine${index}`] = lyricLine}
+                                                                                       className={`${style.text} ${playingLineNum === index ? style.current : ''}`}>{item.txt}</li>)}
+                                    </ul>
+                                </Scroll>
                             </div>
                         </div>
                     </div>
