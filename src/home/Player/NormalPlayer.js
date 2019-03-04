@@ -168,7 +168,7 @@ class NormalPlayer extends React.Component {
         return (
             <CSSTransition
                 onEnter={this.onEnter}
-                timeout={10}
+                timeout={300}
                 classNames={'normal'}
                 in={isFullScreen}>
                 <div className={style['normal-player']} style={{display: isFullScreen ? '' : 'none'}}>
