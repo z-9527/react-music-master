@@ -18,7 +18,7 @@ class ProgressBar extends React.Component {
         _percent: 0
     }
 
-    //react新的生命周期,但是拿不到this
+    //react新的生命周期,但是拿不到this。这里是一个很典型的应用，percent既要同步外面歌曲播放的变化，组件中又可以滑动进度条来改变percent，所以定义了一个_percent
     static getDerivedStateFromProps (nextProps, prevState) {
         const {percent} = nextProps
         // 当传入的type发生变化的时候，更新state
