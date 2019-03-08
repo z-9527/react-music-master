@@ -36,6 +36,7 @@ github地址：[基于React的音乐播放器](https://github.com/zhangZhiHao199
 </table>
 
 `注：点击图片可放大;gif图可能有些失帧`
+
 <br/>
 
 
@@ -94,3 +95,13 @@ github地址：[基于React的音乐播放器](https://github.com/zhangZhiHao199
 项目有点遗憾的就是没有使用过渡效果，路由的过渡，组件的过渡。vue通过v-show或者v-if切换组件的显示和隐藏过渡组件自动添加类名，但是react没有这些标签指令，我只能通过display或者js判断来实现组件的显示和隐藏，而`react-transition-group`是根据in来实现组件状态的改变，当组件离开时动画效果还没完成display就变成了none，导致离开的动画没有。
 
 因为此项目需要后台提供API，所以我购买了阿里云ESC，搭建LNMP、node环境部署了项目（都是傻瓜式命令），其中遇见过一些问题，最后都一一解决了，主要是了解了一点前后端的流程
+
+<br/>
+
+### 其他个人项目
+
+- [基于vue+vue-router+jsonp+vuex仿制的移动端`QQ音乐`](https://github.com/zhangZhiHao1996/vue-music-master)
+- [基于React-Antd的`后台模板Demo`](https://github.com/zhangZhiHao1996/react-admin-master)
+- [基于原生小程序精仿的`猫眼电影小程序`](https://github.com/zhangZhiHao1996/weapp-movie-master)
+
+<br/>
