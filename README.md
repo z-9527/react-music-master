@@ -1,5 +1,5 @@
 github地址：[基于React的音乐播放器](https://github.com/zhangZhiHao1996/react-music-master)  
-预览地址：
+预览地址：[预览地址(窗口大小变化时请刷新一下页面)](http://39.98.32.203/#/find)  
 接口地址：[网易云音乐 API](https://github.com/Binaryify/NeteaseCloudMusicApi)
 <hr/>
 
