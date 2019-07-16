@@ -11,10 +11,11 @@ class Index extends React.Component {
 
     state = {
         toplist: [],
+        topList2: [],
         loading: false
     }
 
-    componentDidMount () {
+    componentDidMount() {
         this.getTopList()
     }
 
@@ -27,16 +28,17 @@ class Index extends React.Component {
         const list = res.list || []
         this.setState({
             loading: false,
-            topList: list
+            topList: list.slice(0, 4),
+            topList2: list.slice(4)
         })
     }
     goDetail = (id) => {
-        const {history} = this.props
+        const { history } = this.props
         history.push(`/sheet/${id}?isTop=1`)
     }
 
-    render () {
-        const {loading, topList} = this.state
+    render() {
+        const { loading, topList, topList2 } = this.state
         return (
             <div className={style.container}>
                 <Scroll>
@@ -46,7 +48,7 @@ class Index extends React.Component {
                                 return (
                                     <li key={item.id} className={style['top-item']} onClick={() => this.goDetail(item.id)}>
                                         <div>
-                                            <img src={item.coverImgUrl} alt=""/>
+                                            <img src={item.coverImgUrl} alt="" />
                                         </div>
                                         <div className={style['top-info']}>
                                             <div className={style.name}>{item.name}</div>
@@ -58,12 +60,35 @@ class Index extends React.Component {
                                 )
                             })}
                         </ul>
-                        <Loading loading={loading}/>
+                        <ul style={styles.box}>
+                            {topList2 && topList2.map((item) => {
+                                return (
+                                    <li key={item.id} className={style['top2-item']} onClick={() => this.goDetail(item.id)}>
+                                        <div className={style['img-box']}>
+                                            <img src={item.coverImgUrl} alt="" />
+                                        </div>
+                                        <div className={style['top2-item-info']}>
+                                            {item.name}
+                                        </div>
+                                    </li>
+                                )
+                            })}
+                        </ul>
+                        <Loading loading={loading} />
                     </div>
                 </Scroll>
             </div>
         )
     }
+}
+
+const styles = {
+    box: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+        marginTop: 20,
+    },
 }
 
 export default Index
