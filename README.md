@@ -1,7 +1,7 @@
 ## 基于react+mobx实现的web音乐app
 
 github地址：[基于React的音乐播放器](https://github.com/zhangZhiHao1996/react-music-master)  
-预览地址：[预览地址(窗口大小变化时请刷新一下页面)](http://39.98.32.203/#/find)  
+预览地址：[预览地址(窗口大小变化时请刷新一下页面)](http://47.99.130.140/react-music/#/find)  
 接口地址：[网易云音乐 API](https://github.com/Binaryify/NeteaseCloudMusicApi)
 <hr/>
 
@@ -80,6 +80,9 @@ github地址：[基于React的音乐播放器](https://github.com/zhangZhiHao199
 通过插件`react-app-rewire-less-modules`来实现less模块化（一个大坑），开发没问题，最后打包时失败，一直不知道原因，切换了node版本、脚手架版本、react-app-rewired版本都没用，打包还是失败，最后没办将别人使用过react-app-rewire-less-modules并打包成功的项目的packjson拷贝，还是有问题，只能将自己的项目复制到别人的项目中进行打包。
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20190308112858285.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM3ODYwOTMw,size_16,color_FFFFFF,t_70)
 <br/>
+
+
+### 运行本项目
 
 
 
