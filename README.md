@@ -83,7 +83,34 @@ github地址：[基于React的音乐播放器](https://github.com/zhangZhiHao199
 
 
 ### 运行本项目
+首先克隆本项目
 
+```shell
+git clone https://github.com/zhangZhiHao1996/react-music-master.git
+```
+
+进入项目并安装依赖然后运行项目
+
+```shell
+cd react-music-master
+yarn install 
+yarn start
+```
+
+克隆接口项目
+
+```shell
+git clone https://github.com/Binaryify/NeteaseCloudMusicApi.git
+```
+
+进入项目并安装依赖
+
+```
+cd NeteaseCloudMusicApi
+yarn install 
+```
+
+接口项目以8088端口启动(可在app.js中修改启动端口)
 
 
 <br/>
