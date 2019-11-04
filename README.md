@@ -110,7 +110,7 @@ cd NeteaseCloudMusicApi
 yarn install 
 ```
 
-接口项目以8088端口启动(可在app.js中修改启动端口)
+接口项目以8000端口启动(可在app.js中修改启动端口)
 
 
 <br/>
